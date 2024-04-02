@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using ToDoSimple.Models;
 
@@ -7,15 +8,18 @@ namespace ToDoSimple.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly ToDoContext _context;
+        public HomeController(ILogger<HomeController> logger, ToDoContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var notes = _context.Notes.ToListAsync();
+
+            return View(notes);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -29,7 +33,9 @@ namespace ToDoSimple.Controllers
             Note note = new Note();
             note.Name = name;
             note.Description = discription;
-            return View(note);
+            _context.Notes.Add(note);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
         public async Task<IActionResult> Delete(string id) //реализовать
         {

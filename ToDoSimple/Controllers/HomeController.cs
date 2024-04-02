@@ -15,9 +15,9 @@ namespace ToDoSimple.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var notes = _context.Notes.ToListAsync();
+            List<Note> notes = await _context.Notes.ToListAsync();
 
             return View(notes);
         }

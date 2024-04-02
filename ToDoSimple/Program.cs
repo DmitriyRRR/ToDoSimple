@@ -1,13 +1,14 @@
 using Microsoft.EntityFrameworkCore;
-using ToDoSimple.Models;
+using ToDoSimple;
 
 var builder = WebApplication.CreateBuilder(args);
+
+string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<ToDoContext>(options => options.UseSqlServer(connectionString));
 
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
-string connectionString = builder.Configuration.GetConnectionString("DefaultConection");
-builder.Services.AddDbContext<ToDoContext>(o=>o.UseSqlServer(connectionString));
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");

@@ -13,6 +13,8 @@
                     <th><u>Description</u></th>
                     <th><u>Is Completed</u></th>
                     <th><u>Delete</u></th>
+                    <th><u>Edit</u></th>
+                    <th><u>Details</u></th>
                 </tr>
                 @foreach (var note in Model)
                 {
@@ -22,6 +24,12 @@
                         <th>@(note.IsCompleted ? "IsCompleted" : "ToDo")</th>
                         <th>
                             <a href="/home/delete/@note.Id">Delete</a>
+                        </th>
+                        <th>
+                            <a href="/home/edit/@note.Id">Edit</a>
+                        </th>
+                        <th>
+                            <a href="/home/details/@note.Id">Details</a>
                         </th>
                     </tr>
                 }

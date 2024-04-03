@@ -49,19 +49,42 @@ namespace ToDoSimple.Controllers
             }
             return RedirectToAction("Index");
         }
-        public IActionResult Edit() => View();
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id != null)
+            {
+
+                Note note = await _context.Notes.FirstOrDefaultAsync(n => n.Id == id);
+                return View(note);
+            }
+            return NotFound();
+        }
 
         [HttpPost]
-        public async Task<IActionResult> EditAsync(int id, string name, string description, bool isConpleted = false) //реализовать
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind("Id, Name, Description, IsCompleted")] Note note)
         {
-            var note = await _context.Notes.FirstOrDefaultAsync(n => n.Id == id);
-            if (note != null)
+            if (ModelState.IsValid)
             {
-                note.Name = name;
-                note.Description = description;
-                note.IsCompleted = isConpleted;
+
+                _context.Entry(note).State = EntityState.Modified;
+                _context.SaveChanges();
+                return RedirectToAction("Index");
             }
-            return RedirectToAction("Index");
+            return View(note);
+        }
+
+
+
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id != null)
+            {
+
+                Note note = await _context.Notes.FirstOrDefaultAsync(n => n.Id == id);
+                return View(note);
+            }
+            return NotFound();
         }
     }
 }

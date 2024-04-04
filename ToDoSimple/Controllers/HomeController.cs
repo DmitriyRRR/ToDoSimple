@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using ToDoSimple.Models;
+using ToDoSimple.Models.Home;
 
 namespace ToDoSimple.Controllers
 {
@@ -74,8 +75,6 @@ namespace ToDoSimple.Controllers
             return View(note);
         }
 
-
-
         public async Task<IActionResult> Details(int? id)
         {
             if (id != null)
@@ -85,6 +84,21 @@ namespace ToDoSimple.Controllers
                 return View(note);
             }
             return NotFound();
+        }
+
+        public IActionResult Create2() => View();
+
+        public async Task<IActionResult> CreateA(HomeViewModel model)
+        {
+            var note = await _context.Notes.FirstOrDefaultAsync(n=>n.Name.ToLower() == model.NoteName.ToLower());
+            await _context.AddAsync(new Note
+            { 
+            Name=model.NoteName,
+            Description=model.NoteDescription
+            });
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index", model);
         }
     }
 }

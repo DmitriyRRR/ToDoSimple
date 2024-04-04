@@ -1,0 +1,37 @@
+﻿@using ToDoSimple.Models.Home;
+@using ToDoSimple.Models;
+
+@model HomeViewModel
+@{
+    ViewBag.Title = "Create Alternative";
+}
+
+<body>
+    <div class="shadow-sm p-3 mt-4 rounded bg-white">
+        <form asp-action="CreateA">
+            <div class="col-4">
+
+                <div action="form-floating">
+                    <input asp-for="NoteName" type="text" class="form-control shadow-sm rounded"></input>
+                    <label asp-for="NoteName">Note Name</label>
+                </div>
+                <span asp-validation-for="NoteDescription" class="text-danger"></span>
+            </div>
+            <div class="col-4">
+
+                <div action="form-floating">
+                    <input asp-for="NoteDescription" type="text" class="form-control shadow-sm rounded"></input>
+                    <label asp-for="NoteDescription">Note Name</label>
+                </div>
+                <span asp-validation-for="NoteDescription" class="text-danger"></span>
+            </div>
+            <div class="col-1 aslign-items-center d-flex">
+                <button class="btn btn-primary d-flex align-items-center justify-content-center shadow" type="submit">
+                    Add
+                </button>
+
+            </div>
+
+        </form>
+    </div>
+</body>

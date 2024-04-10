@@ -3,6 +3,8 @@ using ToDoSimple;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation(); 
+
 string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ToDoContext>(options => options.UseSqlServer(connectionString));
 

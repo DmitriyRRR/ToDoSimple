@@ -1,8 +1,45 @@
-﻿@{
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model IEnumerable<ToDoSimple.Models.Note>
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <div class="col-8">
+        <table class="table table-borderless text-start">
+            <tbody>
+                <tr>
+                    <th><u>Name</u></th>
+                    <th><u>Description</u></th>
+                    <th><u>Is Completed</u></th>
+                    <th><u>Delete</u></th>
+                    <th><u>Edit</u></th>
+                    <th><u>Details</u></th>
+                </tr>
+                @foreach (var note in Model)
+                {
+                    <tr>
+                        <th>@note.Name</th>
+                        <th>@note.Description</th>
+                        <th>@(note.IsCompleted ? "IsCompleted" : "ToDo")</th>
+                        <th>
+                            <a href="/home/delete/@note.Id">Delete</a>
+                        </th>
+                        <th>
+                            <a href="/home/edit/@note.Id">Edit</a>
+                        </th>
+                        <th>
+                            <a href="/home/details/@note.Id">Details</a>
+                        </th>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <a href="/home/create">Create</a>
+</div>
+<div class="row">
+    <a href="/home/create2">Create2</a>
 </div>

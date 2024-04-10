@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using ToDoSimple.Models;
+using ToDoSimple.Models.Home;
 
 namespace ToDoSimple.Controllers
 {
@@ -15,9 +16,9 @@ namespace ToDoSimple.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var notes = _context.Notes.ToListAsync();
+            List<Note> notes = await _context.Notes.ToListAsync();
 
             return View(notes);
         }
@@ -27,28 +28,77 @@ namespace ToDoSimple.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        public IActionResult Create() => View();
 
-        public async Task<IActionResult> Create(string name, string discription)
+        public async Task<IActionResult> AddAsync(string name, string description, bool isConpleted = false)
         {
             Note note = new Note();
             note.Name = name;
-            note.Description = discription;
+            note.Description = description;
+            note.IsCompleted = isConpleted;
             _context.Notes.Add(note);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
-        public async Task<IActionResult> Delete(string id) //реализовать
+        public async Task<IActionResult> Delete(int id)
         {
+            var note = await _context.Notes.FirstOrDefaultAsync(n => n.Id == id);
+            if (note != null)
+            {
+                _context.Notes.Remove(note);
+                _context.SaveChanges();
+            }
             return RedirectToAction("Index");
         }
-        
-        public async Task<IActionResult> Edite(string id) //реализовать
+        public async Task<IActionResult> Edit(int? id)
         {
-            return RedirectToAction("Index");
+            if (id != null)
+            {
+
+                Note note = await _context.Notes.FirstOrDefaultAsync(n => n.Id == id);
+                return View(note);
+            }
+            return NotFound();
         }
-        public IActionResult Privacy()
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind("Id, Name, Description, IsCompleted")] Note note)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+
+                _context.Entry(note).State = EntityState.Modified;
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(note);
+        }
+
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id != null)
+            {
+
+                Note note = await _context.Notes.FirstOrDefaultAsync(n => n.Id == id);
+                return View(note);
+            }
+            return NotFound();
+        }
+
+        public IActionResult Create2() => View();
+
+        public async Task<IActionResult> CreateA(HomeViewModel model)
+        {
+            var note = await _context.Notes.FirstOrDefaultAsync(n=>n.Name.ToLower() == model.NoteName.ToLower());
+            await _context.AddAsync(new Note
+            { 
+            Name=model.NoteName,
+            Description=model.NoteDescription
+            });
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index", model);
         }
     }
 }

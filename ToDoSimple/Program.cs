@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using ToDoSimple;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,8 @@ string connectionString = builder.Configuration.GetConnectionString("DefaultConn
 builder.Services.AddDbContext<ToDoContext>(options => options.UseSqlServer(connectionString));
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(o=>o.LoginPath = "/account");
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 if (!app.Environment.IsDevelopment())

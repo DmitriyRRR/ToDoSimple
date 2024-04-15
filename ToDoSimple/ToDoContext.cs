@@ -9,8 +9,8 @@ namespace ToDoSimple
         public DbSet<User> Users { get; set; } = null!;
         public ToDoContext(DbContextOptions<ToDoContext> options) : base(options)
         {
-            Database.EnsureDeleted();
-            Database.EnsureCreated();
+            //Database.EnsureDeleted();
+            //Database.EnsureCreated();
         }
     }
 }

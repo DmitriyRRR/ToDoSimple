@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using System.Security.Claims;
 using ToDoSimple.Models;
 using ToDoSimple.Models.Home;
 
@@ -12,6 +13,8 @@ namespace ToDoSimple.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ToDoContext _context;
+        protected int _accountId => int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
         public HomeController(ILogger<HomeController> logger, ToDoContext context)
         {
             _logger = logger;
@@ -38,6 +41,7 @@ namespace ToDoSimple.Controllers
             note.Name = name;
             note.Description = description;
             note.IsCompleted = isConpleted;
+            note.UserId = _accountId;
             _context.Notes.Add(note);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
@@ -96,7 +100,8 @@ namespace ToDoSimple.Controllers
             await _context.AddAsync(new Note
             { 
             Name=model.NoteName,
-            Description=model.NoteDescription
+            Description=model.NoteDescription,
+            UserId = _accountId
             });
             await _context.SaveChangesAsync();
 

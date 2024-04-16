@@ -33,7 +33,6 @@ namespace ToDoSimple.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        public IActionResult Create() => View();
 
         public async Task<IActionResult> AddAsync(string name, string description, bool isConpleted = false)
         {
@@ -69,7 +68,7 @@ namespace ToDoSimple.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind("Id, Name, Description, IsCompleted")] Note note)
+        public ActionResult Edit([Bind("Name, Description, IsCompleted")] Note note)
         {
             if (ModelState.IsValid)
             {
@@ -80,6 +79,17 @@ namespace ToDoSimple.Controllers
             }
             return View(note);
         }
+        //public ActionResult Edit([Bind("Name, Description, IsCompleted")] Note note)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+
+        //        _context.Entry(note).State = EntityState.Modified;
+        //        _context.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+        //    return View(note);
+        //}
 
         public async Task<IActionResult> Details(int? id)
         {
@@ -92,11 +102,13 @@ namespace ToDoSimple.Controllers
             return NotFound();
         }
 
-        public IActionResult Create2() => View();
+        public IActionResult Create() => View();
 
-        public async Task<IActionResult> CreateA(HomeViewModel model)
+        [HttpPost]
+        public async Task<IActionResult> CreateAsync(HomeViewModel model)
         {
             var note = await _context.Notes.FirstOrDefaultAsync(n=>n.Name.ToLower() == model.NoteName.ToLower());
+
             await _context.AddAsync(new Note
             { 
             Name=model.NoteName,

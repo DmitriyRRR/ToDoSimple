@@ -6,9 +6,9 @@ namespace ToDoSimple.Models
     public class Note
     {
         public int Id { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Required data")]
         public string Name { get; set; }
-        [Required]
+        [Required(ErrorMessage ="Required data")]
         public string Description { get; set; } = string.Empty;
         public bool IsCompleted { get; set; } = false;
         public int UserId { get; set; }

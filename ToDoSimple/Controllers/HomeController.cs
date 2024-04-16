@@ -107,6 +107,10 @@ namespace ToDoSimple.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAsync(HomeViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("Index", model);
+            }
             var note = await _context.Notes.FirstOrDefaultAsync(n=>n.Name.ToLower() == model.NoteName.ToLower());
 
             await _context.AddAsync(new Note

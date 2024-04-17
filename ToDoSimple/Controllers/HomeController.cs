@@ -13,7 +13,7 @@ namespace ToDoSimple.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ToDoContext _context;
-        protected int _accountId => int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+        protected int _userId => int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
         public HomeController(ILogger<HomeController> logger, ToDoContext context)
         {
@@ -34,17 +34,18 @@ namespace ToDoSimple.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public async Task<IActionResult> AddNoteAsync(string name, string description, bool isConpleted = false)
-        {
-            Note note = new Note();
-            note.Name = name;
-            note.Description = description;
-            note.IsCompleted = isConpleted;
-            note.UserId = _accountId;
-            _context.Notes.Add(note);
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
-        }
+        //public async Task<IActionResult> AddNoteAsync(string name, string description, bool isConpleted = false)
+        //{
+        //    Note note = new Note();
+        //    note.Name = name;
+        //    note.Description = description;
+        //    note.IsCompleted = isConpleted;
+        //    note.UserId = _accountId;
+        //    _context.Notes.Add(note);
+        //    await _context.SaveChangesAsync();
+        //    return RedirectToAction("Index");
+        //}
+
         public async Task<IActionResult> Delete(int id)
         {
             var note = await _context.Notes.FirstOrDefaultAsync(n => n.Id == id);
@@ -55,6 +56,7 @@ namespace ToDoSimple.Controllers
             }
             return RedirectToAction("Index");
         }
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (id != null)
@@ -102,26 +104,29 @@ namespace ToDoSimple.Controllers
             return NotFound();
         }
 
-        public IActionResult Add() => View();
+        [HttpGet]
+        public IActionResult Create() => View();
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+
         public async Task<IActionResult> CreateAsync(HomeViewModel model)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return RedirectToAction("Index", model);
+            await _context.AddAsync(new Note
+            {
+                Name = model.NoteName,
+                Description = model.NoteDescription,
+                UserId = _userId
+            }) ;
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Details", new { id = (_context.Notes.FirstOrDefault(n=>n.Name == model.NoteName).Id) });//wtf?? 
+                //return View("Index", model); // previously variant
             }
             var note = await _context.Notes.FirstOrDefaultAsync(n=>n.Name.ToLower() == model.NoteName.ToLower());
+            return View(note);//??????
 
-            await _context.AddAsync(new Note
-            { 
-            Name=model.NoteName,
-            Description=model.NoteDescription,
-            UserId = _accountId
-            });
-            await _context.SaveChangesAsync();
-
-            return RedirectToAction("Index", model);
         }
     }
 }

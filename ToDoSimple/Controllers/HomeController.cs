@@ -1,15 +1,20 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using System.Security.Claims;
 using ToDoSimple.Models;
 using ToDoSimple.Models.Home;
 
 namespace ToDoSimple.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ToDoContext _context;
+        protected int _accountId => int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
         public HomeController(ILogger<HomeController> logger, ToDoContext context)
         {
             _logger = logger;
@@ -28,14 +33,14 @@ namespace ToDoSimple.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        public IActionResult Create() => View();
 
-        public async Task<IActionResult> AddAsync(string name, string description, bool isConpleted = false)
+        public async Task<IActionResult> AddNoteAsync(string name, string description, bool isConpleted = false)
         {
             Note note = new Note();
             note.Name = name;
             note.Description = description;
             note.IsCompleted = isConpleted;
+            note.UserId = _accountId;
             _context.Notes.Add(note);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
@@ -63,7 +68,7 @@ namespace ToDoSimple.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind("Id, Name, Description, IsCompleted")] Note note)
+        public ActionResult Edit([Bind("Name, Description, IsCompleted")] Note note)
         {
             if (ModelState.IsValid)
             {
@@ -74,6 +79,17 @@ namespace ToDoSimple.Controllers
             }
             return View(note);
         }
+        //public ActionResult Edit([Bind("Name, Description, IsCompleted")] Note note)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+
+        //        _context.Entry(note).State = EntityState.Modified;
+        //        _context.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+        //    return View(note);
+        //}
 
         public async Task<IActionResult> Details(int? id)
         {
@@ -86,15 +102,22 @@ namespace ToDoSimple.Controllers
             return NotFound();
         }
 
-        public IActionResult Create2() => View();
+        public IActionResult Add() => View();
 
-        public async Task<IActionResult> CreateA(HomeViewModel model)
+        [HttpPost]
+        public async Task<IActionResult> CreateAsync(HomeViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("Index", model);
+            }
             var note = await _context.Notes.FirstOrDefaultAsync(n=>n.Name.ToLower() == model.NoteName.ToLower());
+
             await _context.AddAsync(new Note
             { 
             Name=model.NoteName,
-            Description=model.NoteDescription
+            Description=model.NoteDescription,
+            UserId = _accountId
             });
             await _context.SaveChangesAsync();
 

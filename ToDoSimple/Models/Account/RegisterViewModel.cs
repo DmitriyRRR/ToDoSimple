@@ -8,7 +8,7 @@ namespace ToDoSimple.Models.Account
         public string Login { get; set; }
         [Required(ErrorMessage = "Pls input some data")]
         public string Password { get; set; }
-        [Required(ErrorMessage = "Pls input some data")]
+        [Required(ErrorMessage = "Pls repeat password")]
         [Compare("Password", ErrorMessage ="Password aren't match")]
         public string RepeatPassword { get; set; }
     }

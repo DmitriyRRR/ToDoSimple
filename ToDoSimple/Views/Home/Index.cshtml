@@ -1,5 +1,6 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @model IEnumerable<ToDoSimple.Models.Note>
+@using ToDoSimple.Controllers;
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -38,11 +39,11 @@
     </div>
 </div>
 
-<div class="row">
-    <a href="/home/create">Create new Note</a>
-</div>
+<form class="mt-3" asp-controller="Home" asp-action="Add">
+    <button class="btn btn-info w -100">Create new note</button>
+</form>
 
-<div class="row">
-    <a href="/account/logout">Logout</a>
-</div>
+<form class="mt-3" asp-controller="Account" asp-action="logout">
+    <button class="btn btn-danger w -100">Logout</button>
+</form>
 

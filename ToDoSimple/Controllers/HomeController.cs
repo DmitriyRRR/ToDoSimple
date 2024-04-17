@@ -34,7 +34,7 @@ namespace ToDoSimple.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public async Task<IActionResult> AddAsync(string name, string description, bool isConpleted = false)
+        public async Task<IActionResult> AddNoteAsync(string name, string description, bool isConpleted = false)
         {
             Note note = new Note();
             note.Name = name;
@@ -102,7 +102,7 @@ namespace ToDoSimple.Controllers
             return NotFound();
         }
 
-        public IActionResult Create() => View();
+        public IActionResult Add() => View();
 
         [HttpPost]
         public async Task<IActionResult> CreateAsync(HomeViewModel model)

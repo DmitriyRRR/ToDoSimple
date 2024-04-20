@@ -61,7 +61,6 @@ namespace ToDoSimple.Controllers
         {
             if (id != null)
             {
-
                 Note note = await _context.Notes.FirstOrDefaultAsync(n => n.Id == id);
                 return View(note);
             }
@@ -70,8 +69,12 @@ namespace ToDoSimple.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind("Name, Description, IsCompleted")] Note note)
+        public ActionResult Edit([Bind("Name, Description, IsCompleted, User")] Note note)
         {
+            //note.UserId = _userId;
+            note.User = _context.Users.FirstOrDefault(x=>x.Id == _userId);
+            //тут добавить текущего пользователя по выборке в модель?!
+
             if (ModelState.IsValid)
             {
 
@@ -114,18 +117,18 @@ namespace ToDoSimple.Controllers
         {
             if (ModelState.IsValid)
             {
-            await _context.AddAsync(new Note
-            {
-                Name = model.NoteName,
-                Description = model.NoteDescription,
-                UserId = _userId
-            }) ;
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Details", new { id = (_context.Notes.FirstOrDefault(n=>n.Name == model.NoteName).Id) });//wtf?? 
-                //return View("Index", model); // previously variant
+                await _context.AddAsync(new Note
+                {
+                    Name = model.NoteName,
+                    Description = model.NoteDescription,
+                    UserId = _userId
+                });
+                await _context.SaveChangesAsync();
+                //var note = await _context.Notes.FirstOrDefaultAsync(n => n.Name.ToLower() == model.NoteName.ToLower());
+                //return RedirectToAction("Details", new { id = (_context.Notes.FirstOrDefault(n => n.Name == model.NoteName).Id) });//wtf?? 
+                return RedirectToAction("Index"); // previously variant
             }
-            var note = await _context.Notes.FirstOrDefaultAsync(n=>n.Name.ToLower() == model.NoteName.ToLower());
-            return View(note);//??????
+            return View("Create");//??????
 
         }
     }

@@ -5,6 +5,7 @@ namespace ToDoSimple.Models.Home
     public class HomeViewModel
     {
         [Required]
+
         public string NoteName { get; set; }
 
         [Required]

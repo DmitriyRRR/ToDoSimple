@@ -69,32 +69,21 @@ namespace ToDoSimple.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind("Name, Description, IsCompleted, User")] Note note)
+        public async Task<IActionResult> Edit(int id, string name, string description, bool isCompleted)
         {
-            //note.UserId = _userId;
-            note.User = _context.Users.FirstOrDefault(x=>x.Id == _userId);
-            //тут добавить текущего пользователя по выборке в модель?!
-
-            if (ModelState.IsValid)
+            Note note = await _context.Notes.FirstOrDefaultAsync(n => n.Id == id);
+            if (note == null)
             {
-
-                _context.Entry(note).State = EntityState.Modified;
-                _context.SaveChanges();
-                return RedirectToAction("Index");
+                return NotFound();
             }
-            return View(note);
+            note.Name = name;
+            note.Description = description;
+            note.IsCompleted = isCompleted;
+            _context.Entry(note).State = EntityState.Modified;
+            _context.SaveChanges();
+            return RedirectToAction("Index");
         }
-        //public ActionResult Edit([Bind("Name, Description, IsCompleted")] Note note)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
 
-        //        _context.Entry(note).State = EntityState.Modified;
-        //        _context.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-        //    return View(note);
-        //}
 
         public async Task<IActionResult> Details(int? id)
         {

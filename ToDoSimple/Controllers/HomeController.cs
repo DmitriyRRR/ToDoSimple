@@ -69,7 +69,7 @@ namespace ToDoSimple.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, string name, string description, bool isCompleted)
+        public async Task<IActionResult> Edit(int id, string name, string description, bool isCompleted, string expireDate)
         {
             Note note = await _context.Notes.FirstOrDefaultAsync(n => n.Id == id);
             if (note == null)
@@ -79,6 +79,7 @@ namespace ToDoSimple.Controllers
             note.Name = name;
             note.Description = description;
             note.IsCompleted = isCompleted;
+            note.ExpireDate = DateTime.Parse(expireDate);
             _context.Entry(note).State = EntityState.Modified;
             _context.SaveChanges();
             return RedirectToAction("Index");

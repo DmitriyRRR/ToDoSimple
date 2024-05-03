@@ -67,6 +67,22 @@ namespace ToDoSimple.Controllers
             return NotFound();
         }
 
+        public async Task<IActionResult> EditA(int? id)
+        {
+            if (id != null)
+            {
+                Note note = await _context.Notes.FirstOrDefaultAsync(n => n.Id == id);
+                HomeViewModel model = new HomeViewModel();
+
+                model.NoteName = note.Name;
+                model.NoteDescription = note.Description;
+                model.ExpireDate = note.ExpireDate;
+
+                return View(model);
+            }
+            return NotFound();
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, string name, string description, bool isCompleted, string expireDate)
@@ -85,6 +101,18 @@ namespace ToDoSimple.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditA(HomeViewModel model)
+        {
+            Note note = new Note();
+            note.Name = model.NoteName;
+            note.Description = model.NoteDescription;
+            note.ExpireDate = model.ExpireDate;
+            _context.Entry(note).State = EntityState.Modified;
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
 
         public async Task<IActionResult> Details(int? id)
         {

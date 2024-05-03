@@ -10,7 +10,10 @@ namespace ToDoSimple.Models.Home
 
         [Required]
         public string NoteDescription { get; set; }
-        
+
+        [Required]
+        public DateTime ExpireDate { get; set; }
+
         public IEnumerable<Note>? Notes { get; set; }
     }
 }

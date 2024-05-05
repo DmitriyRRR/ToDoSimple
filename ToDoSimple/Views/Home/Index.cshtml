@@ -14,6 +14,7 @@
                     <th><u>Name</u></th>
                     <th><u>Description</u></th>
                     <th><u>Is Completed</u></th>
+                    <th><u>Create Stamp</u></th>
                     <th><u>Details</u></th>
                 </tr>
                 @foreach (var note in Model)
@@ -24,7 +25,8 @@
                         </th>
                         <th><a href="/home/edit/@note.Id">@note.Name</a></th>
                         <th>@note.ExpireDate</th>
-                        <th>@(note.IsCompleted ? "IsCompleted" : "ToDo")</th>
+                        <th>@(note.IsCompleted ? "Done!" : "In process")</th>
+                        <th>@note.CreatedTimestamp</th>
                         <th>
                             <a href="/home/details/@note.Id">Details</a>
                         </th>

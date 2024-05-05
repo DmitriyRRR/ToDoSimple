@@ -30,11 +30,14 @@ namespace ToDoSimple.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("CreatedTimestamp")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("ExpireDate")
+                    b.Property<DateTime>("ExpireDate")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsCompleted")

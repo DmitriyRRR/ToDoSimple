@@ -12,6 +12,7 @@ namespace ToDoSimple.Models.Home
         public string NoteDescription { get; set; }
 
         [Required]
+        [Range(typeof(DateTime), "1/1/2011","1/1/2030")]
         public DateTime ExpireDate { get; set; }
 
         public IEnumerable<Note>? Notes { get; set; }

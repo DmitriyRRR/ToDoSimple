@@ -67,21 +67,21 @@ namespace ToDoSimple.Controllers
             return NotFound();
         }
 
-        public async Task<IActionResult> EditA(int? id)
-        {
-            if (id != null)
-            {
-                Note note = await _context.Notes.FirstOrDefaultAsync(n => n.Id == id);
-                HomeViewModel model = new HomeViewModel();
+        //public async Task<IActionResult> EditA(int? id)
+        //{
+        //    if (id != null)
+        //    {
+        //        Note note = await _context.Notes.FirstOrDefaultAsync(n => n.Id == id);
+        //        HomeViewModel model = new HomeViewModel();
 
-                model.NoteName = note.Name;
-                model.NoteDescription = note.Description;
-                model.ExpireDate = note.ExpireDate;
+        //        model.NoteName = note.Name;
+        //        model.NoteDescription = note.Description;
+        //        model.ExpireDate = note.ExpireDate;
 
-                return View(model);
-            }
-            return NotFound();
-        }
+        //        return View(model);
+        //    }
+        //    return NotFound();
+        //}
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -139,6 +139,7 @@ namespace ToDoSimple.Controllers
                 {
                     Name = model.NoteName,
                     Description = model.NoteDescription,
+                    ExpireDate = model.ExpireDate,
                     UserId = _userId
                 });
                 await _context.SaveChangesAsync();

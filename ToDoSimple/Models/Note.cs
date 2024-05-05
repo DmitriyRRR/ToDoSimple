@@ -13,8 +13,9 @@ namespace ToDoSimple.Models
         public bool IsCompleted { get; set; } = false;
         public int UserId { get; set; }
         //public DateTime CreationDate { get; set; } = DateTime.Now;
-        public DateTime ExpireDate { get; set; }
-        //public DateTime? CreatedTimestamp { get; set; }
+        [Required]
+        public DateTime ExpireDate { get; set; } = DateTime.Now;
+        public DateTime CreatedTimestamp { get; set; } = DateTime.Now;
 
         [ForeignKey("UserId")]
         public User User { get; set; }

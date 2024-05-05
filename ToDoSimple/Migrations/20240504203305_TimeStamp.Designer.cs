@@ -12,8 +12,8 @@ using ToDoSimple;
 namespace ToDoSimple.Migrations
 {
     [DbContext(typeof(ToDoContext))]
-    [Migration("20240423193145_Creation-Time2")]
-    partial class CreationTime2
+    [Migration("20240504203305_TimeStamp")]
+    partial class TimeStamp
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,11 +33,14 @@ namespace ToDoSimple.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("CreatedTimestamp")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("ExpireDate")
+                    b.Property<DateTime>("ExpireDate")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsCompleted")

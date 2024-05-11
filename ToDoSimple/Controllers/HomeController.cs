@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Security.Claims;
 using ToDoSimple.Models;
 using ToDoSimple.Models.Home;
+using ToDoSimple.Models.Pagination;
 
 namespace ToDoSimple.Controllers
 {
@@ -21,11 +22,12 @@ namespace ToDoSimple.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(bool moveNext, bool movePrevious, int currentPageIndex = 0)
         {
             List<Note> notes = await _context.Notes.ToListAsync();
-
-            return View(notes);
+            PageViewModel page = new PageViewModel();
+            
+            return View(await Page(page));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -130,7 +132,6 @@ namespace ToDoSimple.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-
         public async Task<IActionResult> CreateAsync(HomeViewModel model)
         {
             if (ModelState.IsValid)
@@ -149,6 +150,15 @@ namespace ToDoSimple.Controllers
             }
             return View("Create");//??????
 
+        }
+
+        public async Task<IEnumerable<Note>> Page(PageViewModel model)
+        {
+            model.PageIndex = currentPageIndex;
+            model.ItemsPerPageCount = 5;
+            model.TotalItemsCount = await _context.Notes.CountAsync();
+            model.PageCount = model.TotalItemsCount / model.ItemsPerPageCount;
+            return model.ItemsOnPage = await _context.Notes.Skip(model.TotalItemsCount / model.PageCount * (model.PageIndex - 1)).Take(model.ItemsPerPageCount).ToListAsync();
         }
     }
 }

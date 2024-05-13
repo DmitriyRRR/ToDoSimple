@@ -35,6 +35,7 @@
                 }
             </tbody>
         </table>
+
         <nav aria-label="Pagination">
             <ul class="pagination">
                 <li class="page-item">
@@ -47,9 +48,22 @@
                         </a>
                     }
                 </li>
-                <li class="page-item"><a class="page-link" asp-controller="Home" asp-route-pageNumber="1">1</a></li>
-                <li class="page-item"><a class="page-link" asp-controller="Home" asp-route-pageNumber="2">2</a></li>
-                <li class="page-item"><a class="page-link" asp-controller="Home" asp-route-pageNumber="3">3</a></li>
+                @if (Model.PageNumber == 1)
+                {
+                    <li class="page-item"><a class="page-link" asp-controller="Home" asp-route-pageNumber="@(Model.PageNumber)">"@(Model.PageNumber)"</a></li>
+                }
+                @if(Model.PageNumber >1 && Model.PageNumber<Model.TotalPages)
+                {
+                    <li class="page-item"><a class="page-link" asp-controller="Home" asp-route-pageNumber="@(Model.PageNumber -1)">@(Model.PageNumber -1)</a></li>
+                    <li class="page-item"><a class="page-link" asp-controller="Home" asp-route-pageNumber="@(Model.PageNumber)">@(Model.PageNumber)</a></li>
+                    <li class="page-item"><a class="page-link" asp-controller="Home" asp-route-pageNumber="@(Model.PageNumber+1)">@(Model.PageNumber+1)</a></li>
+
+                }
+                @if (Model.PageNumber == Model.TotalPages)
+                {
+                    <li class="page-item"><a class="page-link" asp-controller="Home" asp-route-pageNumber="@(Model.PageNumber -1)">@(Model.PageNumber - 1)</a></li>
+                    <li class="page-item"><a class="page-link" asp-controller="Home" asp-route-pageNumber="@(Model.PageNumber)">@(Model.PageNumber)</a></li>
+                }
                 <li>
                     @if (Model.HasNextPage)
                     {
@@ -62,6 +76,7 @@
                 </li>
             </ul>
         </nav>
+
     </div>
 </div>
 

@@ -4,7 +4,7 @@
     {
         public int PageNumber { get; set; } = 0; // current page number
         public int TotalPages { get; set; } // total pages amount 
-        public int CountItemsPerPage { get; set; } // amount items on the each page
+        public int PageSize { get; set; } // amount items on the each page
         public int TotalItemsCount { get; set; } = 0; //items amount??? isn't neccessery?
         public bool HasPreviousPage
         {
@@ -21,13 +21,7 @@
             }
         }
 
-        public IEnumerable<Note> NotesOnPage { get; set; }
+        public IEnumerable<Note>? Notes { get; set; }
 
-        public PageViewModel(int countAllItems, int pageNumber, int pageSize)
-
-        {
-            PageNumber = pageNumber;
-            TotalPages = (int)Math.Ceiling(countAllItems / (double)pageSize);
-        }
     }
 }

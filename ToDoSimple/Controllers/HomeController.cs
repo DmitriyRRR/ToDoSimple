@@ -22,12 +22,26 @@ namespace ToDoSimple.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index(bool moveNext, bool movePrevious, int currentPageIndex = 0)
+        public async Task<IActionResult> Index(int pageNumber = 1)
         {
-            List<Note> notes = await _context.Notes.ToListAsync();
+            int pageSize = 4;
+            int totalItemsCount = _context.Notes.Count();
             PageViewModel page = new PageViewModel();
             
-            return View(await Page(page));
+            return View(await Page(page , pageNumber, pageSize, totalItemsCount));
+        }
+
+        public async Task<PageViewModel> Page(PageViewModel page, int pageNumber, int pageSize, int totalItemsCount)
+        {
+            page.TotalItemsCount = await _context.Notes.CountAsync();
+            page.PageNumber = pageNumber;
+            page.PageSize = pageSize;
+            page.TotalPages = (int)Math.Ceiling(totalItemsCount / (double)pageSize);
+
+            page.Notes = await _context.Notes
+                .Skip(page.TotalItemsCount / page.PageSize * (page.PageNumber - 1))
+                .Take(page.PageSize).ToListAsync();
+            return page;
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -152,13 +166,5 @@ namespace ToDoSimple.Controllers
 
         }
 
-        public async Task<IEnumerable<Note>> Page(PageViewModel model)
-        {
-            model.PageIndex = currentPageIndex;
-            model.ItemsPerPageCount = 5;
-            model.TotalItemsCount = await _context.Notes.CountAsync();
-            model.PageCount = model.TotalItemsCount / model.ItemsPerPageCount;
-            return model.ItemsOnPage = await _context.Notes.Skip(model.TotalItemsCount / model.PageCount * (model.PageIndex - 1)).Take(model.ItemsPerPageCount).ToListAsync();
-        }
     }
 }

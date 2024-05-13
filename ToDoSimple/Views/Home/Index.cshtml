@@ -1,6 +1,7 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@model IEnumerable<ToDoSimple.Models.Note>
+@using ToDoSimple.Models.Pagination;
 @using ToDoSimple.Controllers;
+@model PageViewModel;
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -17,7 +18,7 @@
                     <th><u>Create Stamp</u></th>
                     <th><u>Details</u></th>
                 </tr>
-                @foreach (var note in Model)
+                @foreach (var note in Model.Notes)
                 {
                     <tr>
                         <th>
@@ -34,23 +35,33 @@
                 }
             </tbody>
         </table>
-    <nav aria-label="Pagination">
-        <ul class="pagination">
-            <li class="page-item">
-                <a class="page-link" href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
+        <nav aria-label="Pagination">
+            <ul class="pagination">
+                <li class="page-item">
+                    @if (Model.HasPreviousPage)
+                    {
+                        <a asp-action="Index"
+                           asp-route-pageNumber="@(Model.PageNumber-1)"
+                           class="page-link" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    }
+                </li>
+                <li class="page-item"><a class="page-link" asp-controller="Home" asp-route-pageNumber="1">1</a></li>
+                <li class="page-item"><a class="page-link" asp-controller="Home" asp-route-pageNumber="2">2</a></li>
+                <li class="page-item"><a class="page-link" asp-controller="Home" asp-route-pageNumber="3">3</a></li>
+                <li>
+                    @if (Model.HasNextPage)
+                    {
+                        <a asp-action="Index"
+                           asp-route-pageNumber="@(Model.PageNumber+1)"
+                           class="btn btn-outline-dark">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    }
+                </li>
+            </ul>
+        </nav>
     </div>
 </div>
 

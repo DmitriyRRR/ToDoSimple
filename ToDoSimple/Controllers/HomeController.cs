@@ -30,13 +30,17 @@ namespace ToDoSimple.Controllers
             page.TotalItemsCount = totalItemsCount;
             page.PageNumber = pageNumber;
             page.PageSize = pageSize;
+            page.TotalPages = (int)Math.Ceiling(page.TotalItemsCount / (double)page.PageSize);
+            if (pageNumber < 1 || pageNumber > page.TotalPages)
+            {
+                page.PageNumber = 1;
+            }
+
             return View(await Page(page));
         }
 
         public async Task<PageViewModel> Page(PageViewModel page)
         {
-            page.TotalPages = (int)Math.Ceiling(page.TotalItemsCount / (double)page.PageSize);
-
             page.Notes = await _context.Notes
                 .Skip(page.TotalItemsCount / page.PageSize * (page.PageNumber - 1))
                 .Take(page.PageSize).ToListAsync();

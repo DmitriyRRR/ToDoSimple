@@ -24,19 +24,18 @@ namespace ToDoSimple.Controllers
 
         public async Task<IActionResult> Index(int pageNumber = 1)
         {
-            int pageSize = 4;
+            int pageSize = 5;
             int totalItemsCount = _context.Notes.Count();
             PageViewModel page = new PageViewModel();
-            
-            return View(await Page(page , pageNumber, pageSize, totalItemsCount));
-        }
-
-        public async Task<PageViewModel> Page(PageViewModel page, int pageNumber, int pageSize, int totalItemsCount)
-        {
-            page.TotalItemsCount = await _context.Notes.CountAsync();
+            page.TotalItemsCount = totalItemsCount;
             page.PageNumber = pageNumber;
             page.PageSize = pageSize;
-            page.TotalPages = (int)Math.Ceiling(totalItemsCount / (double)pageSize);
+            return View(await Page(page));
+        }
+
+        public async Task<PageViewModel> Page(PageViewModel page)
+        {
+            page.TotalPages = (int)Math.Ceiling(page.TotalItemsCount / (double)page.PageSize);
 
             page.Notes = await _context.Notes
                 .Skip(page.TotalItemsCount / page.PageSize * (page.PageNumber - 1))

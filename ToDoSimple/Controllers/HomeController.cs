@@ -177,16 +177,5 @@ namespace ToDoSimple.Controllers
             }
             return View("Create");//??????
         }
-
-        public async Task<IActionResult> Search(string searchString)
-        {
-            if (string.IsNullOrEmpty(searchString))
-            {
-                throw new ArgumentNullException(nameof(searchString), "The searchString is null or emptyString, but method was called");
-            }
-            List<Note> searchResult = await _context.Notes.Where(n => n.Name.Contains(searchString) || n.Description.Contains(searchString)).ToListAsync();
-
-            return View(searchResult);
-        }
     }
 }

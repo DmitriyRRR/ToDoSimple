@@ -22,7 +22,7 @@ namespace ToDoSimple.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index(string searchString = "2", int pageNumber = 1)
+        public async Task<IActionResult> Index(string searchString, int pageNumber = 1)
         {
             int pageSize = 5;
             int totalItemsCount = _context.Notes.Count();
@@ -43,16 +43,18 @@ namespace ToDoSimple.Controllers
 
         public async Task<PageViewModel> Page(PageViewModel page)
         {
+            IEnumerable<Note> source;
             if (string.IsNullOrEmpty(page.SearchString))
             {
-                page.Notes = await _context.Notes
-                    .Skip(page.TotalItemsCount / page.PageSize * (page.PageNumber - 1))
-                    .Take(page.PageSize).ToListAsync();
+                source = await _context.Notes.OrderBy(n => n.Name).ToListAsync();
             }
             else
             {
-                page.Notes = await _context.Notes.Where(n => n.Name.Contains(page.SearchString) || n.Description.Contains(page.SearchString)).ToListAsync();
+                source = await _context.Notes.Where(n => n.Name.Contains(page.SearchString) || n.Description.Contains(page.SearchString)).ToListAsync();
             }
+            page.Notes = source
+                .Skip(page.TotalItemsCount / page.PageSize * (page.PageNumber - 1))
+                .Take(page.PageSize).ToList();
             return page;
         }
 

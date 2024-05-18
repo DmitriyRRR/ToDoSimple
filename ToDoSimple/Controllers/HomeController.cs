@@ -48,7 +48,6 @@ namespace ToDoSimple.Controllers
                 page.Notes = await _context.Notes
                     .Skip(page.TotalItemsCount / page.PageSize * (page.PageNumber - 1))
                     .Take(page.PageSize).ToListAsync();
-                //                throw new ArgumentNullException(nameof(page.SearchString), "The searchString is null or emptyString, but method was called");
             }
             else
             {
@@ -62,18 +61,6 @@ namespace ToDoSimple.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
-        //public async Task<IActionResult> AddNoteAsync(string name, string description, bool isConpleted = false)
-        //{
-        //    Note note = new Note();
-        //    note.Name = name;
-        //    note.Description = description;
-        //    note.IsCompleted = isConpleted;
-        //    note.UserId = _accountId;
-        //    _context.Notes.Add(note);
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction("Index");
-        //}
 
         public async Task<IActionResult> Delete(int id)
         {
@@ -95,22 +82,6 @@ namespace ToDoSimple.Controllers
             }
             return NotFound();
         }
-
-        //public async Task<IActionResult> EditA(int? id)
-        //{
-        //    if (id != null)
-        //    {
-        //        Note note = await _context.Notes.FirstOrDefaultAsync(n => n.Id == id);
-        //        HomeViewModel model = new HomeViewModel();
-
-        //        model.NoteName = note.Name;
-        //        model.NoteDescription = note.Description;
-        //        model.ExpireDate = note.ExpireDate;
-
-        //        return View(model);
-        //    }
-        //    return NotFound();
-        //}
 
         [HttpPost]
         [ValidateAntiForgeryToken]

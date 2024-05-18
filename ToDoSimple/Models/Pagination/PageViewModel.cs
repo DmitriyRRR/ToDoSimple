@@ -21,6 +21,7 @@
             }
         }
 
+        public String? SearchString { get; set; } = String.Empty;
         public IEnumerable<Note>? Notes { get; set; }
 
     }

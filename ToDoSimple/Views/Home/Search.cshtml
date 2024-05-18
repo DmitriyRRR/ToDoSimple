@@ -3,19 +3,11 @@
 @using ToDoSimple.Controllers;
 @model PageViewModel;
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Search result";
 }
 
 <div class="text-center">
     <div class="col-8">
-        <form asp-action="index">
-            <div class="form-floating">
-                <p>
-                    <input type="text" name="searchString"/>
-                    <input type="submit" value="Search" class="btn btn-default" />
-                </p>
-            </div>
-        </form>
         <table class="table table-borderless text-start">
             <tbody>
                 <tr>

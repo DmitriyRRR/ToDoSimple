@@ -22,11 +22,13 @@ namespace ToDoSimple.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index(int pageNumber = 1)
+        public async Task<IActionResult> Index(string searchString = "2", int pageNumber = 1)
         {
             int pageSize = 5;
             int totalItemsCount = _context.Notes.Count();
+
             PageViewModel page = new PageViewModel();
+            page.SearchString = searchString;
             page.TotalItemsCount = totalItemsCount;
             page.PageNumber = pageNumber;
             page.PageSize = pageSize;
@@ -41,9 +43,17 @@ namespace ToDoSimple.Controllers
 
         public async Task<PageViewModel> Page(PageViewModel page)
         {
-            page.Notes = await _context.Notes
-                .Skip(page.TotalItemsCount / page.PageSize * (page.PageNumber - 1))
-                .Take(page.PageSize).ToListAsync();
+            if (string.IsNullOrEmpty(page.SearchString))
+            {
+                page.Notes = await _context.Notes
+                    .Skip(page.TotalItemsCount / page.PageSize * (page.PageNumber - 1))
+                    .Take(page.PageSize).ToListAsync();
+                //                throw new ArgumentNullException(nameof(page.SearchString), "The searchString is null or emptyString, but method was called");
+            }
+            else
+            {
+                page.Notes = await _context.Notes.Where(n => n.Name.Contains(page.SearchString) || n.Description.Contains(page.SearchString)).ToListAsync();
+            }
             return page;
         }
 
@@ -166,8 +176,17 @@ namespace ToDoSimple.Controllers
                 return RedirectToAction("Index"); // previously variant
             }
             return View("Create");//??????
-
         }
 
+        public async Task<IActionResult> Search(string searchString)
+        {
+            if (string.IsNullOrEmpty(searchString))
+            {
+                throw new ArgumentNullException(nameof(searchString), "The searchString is null or emptyString, but method was called");
+            }
+            List<Note> searchResult = await _context.Notes.Where(n => n.Name.Contains(searchString) || n.Description.Contains(searchString)).ToListAsync();
+
+            return View(searchResult);
+        }
     }
 }

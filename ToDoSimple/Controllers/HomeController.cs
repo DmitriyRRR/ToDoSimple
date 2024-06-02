@@ -26,7 +26,7 @@ namespace ToDoSimple.Controllers
         {
             int pageSize = 5;
             int totalItemsCount = _context.Notes.Count();
-
+            ViewData["CurrentFilter"] = searchString;
             PageViewModel page = new PageViewModel();
             page.SearchString = searchString;
             page.TotalItemsCount = totalItemsCount;
@@ -122,6 +122,7 @@ namespace ToDoSimple.Controllers
             {
 
                 Note note = await _context.Notes.FirstOrDefaultAsync(n => n.Id == id);
+                //return PartialView(note);
                 return View(note);
             }
             return NotFound();

@@ -1,0 +1,13 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model ToDoSimple.Models.Note;
+@{
+    ViewBag.Title = @Model.Name;
+}
+<div class="row">
+    <div class="col-4 text-start">  
+        <li>
+            <span>@Model.Description</span>
+        </li>   
+    </div>
+
+</div>

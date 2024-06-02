@@ -8,24 +8,30 @@
 
 <div class="text-center">
     <div class="col-8">
-        <form asp-action="index">
+        <form asp-action="index" method="get">
             <div class="form-floating">
+@*                 <p>
+                        <input type="text" name="searchString" placeholder="search" />
+                        <input type="submit" value="Search" class="btn btn-outline-info" />
+                </p> *@
                 <p>
-                    <input type="text" name="searchString" placeholder="search"/>
-                    <input type="submit" value="Search" class="btn btn-outline-info" />
+                    Find by name: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+                    <input type="submit" value="Search" class="btn btn-default" /> |
+                    <a asp-action="Index">Back to Full List</a>
                 </p>
             </div>
         </form>
-        <table class="table table-borderless text-start">
+        <table class="table table-hover table-striped text-start">
             <tbody>
                 <tr>
                     <th><u></u></th>
                     <th><u>Name</u></th>
-                    <th><u>Description</u></th>
+                    <th><u>ExpireDate</u></th>
                     <th><u>Is Completed</u></th>
                     <th><u>Create Stamp</u></th>
                     <th><u>Details</u></th>
                 </tr>
+                <tr>
                 @foreach (var note in Model.Notes)
                 {
                     <tr>

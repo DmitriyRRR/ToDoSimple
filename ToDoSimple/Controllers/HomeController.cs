@@ -22,23 +22,29 @@ namespace ToDoSimple.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index(string searchString, int pageNumber = 1)
+        public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
-            int pageSize = 5;
-            int totalItemsCount = _context.Notes.Count();
+            ViewData["NameSort"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["CurrentFilter"] = searchString;
-            PageViewModel page = new PageViewModel();
-            page.SearchString = searchString;
-            page.TotalItemsCount = totalItemsCount;
-            page.PageNumber = pageNumber;
-            page.PageSize = pageSize;
-            page.TotalPages = (int)Math.Ceiling(page.TotalItemsCount / (double)page.PageSize);
-            if (pageNumber < 1 || pageNumber > page.TotalPages)
+
+            var notes = from n in _context.Notes select n;
+            if (!string.IsNullOrEmpty(searchString))
             {
-                page.PageNumber = 1;
+                notes = notes.Where(
+                    n=>n.Name.Contains(searchString)||
+                    n.Description.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    notes = notes.OrderBy(n => n.Name);
+                    break;
+                default:
+                    notes = notes.OrderBy(n => n.CreatedTimestamp);
+                    break;
             }
 
-            return View(await Page(page));
+            return View(await notes.AsNoTracking().ToListAsync());
         }
 
         public async Task<PageViewModel> Page(PageViewModel page)

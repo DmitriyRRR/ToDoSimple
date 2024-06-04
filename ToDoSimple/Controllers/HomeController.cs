@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Security.Claims;
@@ -22,27 +23,29 @@ namespace ToDoSimple.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index(string sortOrder, string searchString)
+        public async Task<IActionResult> Index(string searchString, SortState sortOrder = SortState.CreateDateDesc)
         {
-            ViewData["NameSort"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["NameSort"] = sortOrder == SortState.NameAsc ? SortState.NameDesc : SortState.NameAsc;
+            ViewData["CreateDataSort"] = sortOrder == SortState.CreateDateAsc ? SortState.CreateDateDesc : SortState.CreateDateAsc;
+            ViewData["EndDateSort"] = sortOrder == SortState.EndDateAsc ? SortState.EndDateDesc : SortState.EndDateAsc;
             ViewData["CurrentFilter"] = searchString;
 
-            var notes = from n in _context.Notes select n;
+            IQueryable<Note> notes = from n in _context.Notes select n;
             if (!string.IsNullOrEmpty(searchString))
             {
                 notes = notes.Where(
-                    n=>n.Name.Contains(searchString)||
+                    n => n.Name.Contains(searchString) ||
                     n.Description.Contains(searchString));
             }
-            switch (sortOrder)
+            notes = sortOrder switch
             {
-                case "name_desc":
-                    notes = notes.OrderBy(n => n.Name);
-                    break;
-                default:
-                    notes = notes.OrderBy(n => n.CreatedTimestamp);
-                    break;
-            }
+                SortState.NameDesc => notes.OrderByDescending(n => n.Name),
+                SortState.NameAsc => notes.OrderBy(n => n.Name),
+                SortState.EndDateAsc => notes.OrderBy(n => n.ExpireDate),
+                SortState.EndDateDesc => notes.OrderByDescending(n => n.ExpireDate),
+                SortState.CreateDateAsc => notes.OrderBy(n => n.CreatedTimestamp),
+                _ => notes.OrderByDescending(n => n.CreatedTimestamp),
+            };
 
             return View(await notes.AsNoTracking().ToListAsync());
         }

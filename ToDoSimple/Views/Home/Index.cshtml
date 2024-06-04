@@ -10,29 +10,33 @@
     <div class="col-8">
         <form asp-action="index" method="get">
             <div class="form-floating">
-                @*                 <p>
-                <input type="text" name="searchString" placeholder="search" />
-                <input type="submit" value="Search" class="btn btn-outline-info" />
-                </p> *@
                 <p>
                     Find by name: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
-                    <input type="submit" value="Search" class="btn btn-default" /> |
+                    <input class="btn btn-outline-info w -75" type="submit" value="Search" /> |
                     <a asp-action="Index">Back to Full List</a>
                 </p>
             </div>
         </form>
-        <table class="table table-hover table-striped text-start">
+        <table class="table table-hover table-striped">
             <tbody>
                 <tr>
                     <th><u></u></th>
                     <th>
                         <u>
-                            <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSort"]">@Html.DisplayNameFor(model => model.Name)</a>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSort"]">Name</a>
                         </u>
                     </th>
-                    <th><u>ExpireDate</u></th>
+                    <th>
+                        <u>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["EndDateSort"]">ExpireDate</a>
+                        </u>
+                    </th>
                     <th><u>Is Completed</u></th>
-                    <th><u>Create Stamp</u></th>
+                    <th>
+                        <u>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["CreateDataSort"]">Create Date</a>
+                        </u>
+                    </th>
                     <th><u>Details</u></th>
                 </tr>
                 <tr>
@@ -42,13 +46,15 @@
                         <th>
                             <a href="/home/delete/@note.Id"><button class="btn-close w-25"></button></a>
                         </th>
-                        <th><a href="/home/edit/@note.Id">@note.Name</a></th>
+                        <th class="text-start"><a href="/home/edit/@note.Id">@note.Name</a></th>
                         <th>@note.ExpireDate</th>
                         <th>@(note.IsCompleted ? "Done!" : "In process")</th>
                         <th>@note.CreatedTimestamp</th>
                         <th>
                             <a href="/home/details/@note.Id">Details</a>
                         </th>
+                    </tr>
+                    <tr>
                     </tr>
                     }
             </tbody>

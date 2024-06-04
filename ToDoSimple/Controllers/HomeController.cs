@@ -23,14 +23,25 @@ namespace ToDoSimple.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index(string searchString, SortState sortOrder = SortState.CreateDateDesc)
+        public async Task<IActionResult> Index(int? pageNumber, string currentFilter, string searchString, SortState sortOrder = SortState.CreateDateDesc, int pageSize = 5)
         {
             ViewData["NameSort"] = sortOrder == SortState.NameAsc ? SortState.NameDesc : SortState.NameAsc;
             ViewData["CreateDataSort"] = sortOrder == SortState.CreateDateAsc ? SortState.CreateDateDesc : SortState.CreateDateAsc;
             ViewData["EndDateSort"] = sortOrder == SortState.EndDateAsc ? SortState.EndDateDesc : SortState.EndDateAsc;
             ViewData["CurrentFilter"] = searchString;
 
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            ViewData["CurrentFilter"] = searchString;
+
             IQueryable<Note> notes = from n in _context.Notes select n;
+
             if (!string.IsNullOrEmpty(searchString))
             {
                 notes = notes.Where(
@@ -47,7 +58,7 @@ namespace ToDoSimple.Controllers
                 _ => notes.OrderByDescending(n => n.CreatedTimestamp),
             };
 
-            return View(await notes.AsNoTracking().ToListAsync());
+            return View(await PaginatedList<Note>.CreateAsync(notes.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         public async Task<PageViewModel> Page(PageViewModel page)
@@ -129,9 +140,7 @@ namespace ToDoSimple.Controllers
         {
             if (id != null)
             {
-
                 Note note = await _context.Notes.FirstOrDefaultAsync(n => n.Id == id);
-                //return PartialView(note);
                 return View(note);
             }
             return NotFound();

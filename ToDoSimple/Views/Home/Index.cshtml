@@ -37,7 +37,7 @@
                             <a asp-action="Index" asp-route-sortOrder="@ViewData["CreateDataSort"]">Create Date</a>
                         </u>
                     </th>
-                    <th><u>Details</u></th>
+                    <th><u></u></th>
                 </tr>
                 <tr>
                     @foreach (var note in Model)
@@ -46,12 +46,12 @@
                         <th>
                             <a href="/home/delete/@note.Id"><button class="btn-close w-25"></button></a>
                         </th>
-                        <th class="text-start"><a href="/home/edit/@note.Id">@note.Name</a></th>
+                        <th class="text-start"><a href="/home/details/@note.Id">@note.Name</a></th>
                         <th>@note.ExpireDate</th>
                         <th>@(note.IsCompleted ? "Done!" : "In process")</th>
                         <th>@note.CreatedTimestamp</th>
                         <th>
-                            <a href="/home/details/@note.Id">Details</a>
+                            <a href="/home/edit/@note.Id">Edit</a>
                         </th>
                     </tr>
                     <tr>
@@ -64,21 +64,37 @@
             var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
             var nextDisabled = !Model.HasNextPage ? "disabled" : "";
         }
+        <nav aria-label="Pagiantion">
+            <ul class="pagination justify-content-center">
 
-        <a asp-action="Index"
-           asp-route-sortOrder="@ViewData["CurrentSort"]"
-           asp-route-pageNumber="@(Model.PageIndex - 1)"
-           asp-route-currentFilter="@ViewData["CurrentFilter"]"
-           class="btn btn-default @prevDisabled">
-            Previous
-        </a>
-        <a asp-action="Index"
-           asp-route-sortOrder="@ViewData["CurrentSort"]"
-           asp-route-pageNumber="@(Model.PageIndex + 1)"
-           asp-route-currentFilter="@ViewData["CurrentFilter"]"
-           class="btn btn-default @nextDisabled">
-            Next
-        </a>
+                <link class="page-item">
+                <a asp-action="Index"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-pageNumber="@(Model.PageIndex - 1)"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   class="btn btn-default @prevDisabled">
+                    <-
+                </a>
+                </li>
+                <link class="page-item">
+                <form asp-action="Index"
+                      asp-route-sortOrder="@ViewData["CurrentSort"]"
+                      asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                    <input type="number" min="1" max="@Model.TotalPages" name="pageNumber" value="@Model.PageIndex" placeholder="@Model.PageIndex" />
+                    <input class="btn btn-outline-info w -50" type="submit" value="Go" />
+                </form>
+                </li>
+                <link class="page-item">
+                <a asp-action="Index"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-pageNumber="@(Model.PageIndex + 1)"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   class="btn btn-default @nextDisabled">
+                    ->
+                </a>
+                </li>
+            </ul>
+        </nav>
         @*         <nav aria-label="Pagination">
         <ul class="pagination justify-content-center">
         <li class="page-item">

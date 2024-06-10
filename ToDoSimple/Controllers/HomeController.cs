@@ -25,6 +25,7 @@ namespace ToDoSimple.Controllers
 
         public async Task<IActionResult> Index(int? pageNumber, string currentFilter, string searchString, SortState sortOrder = SortState.CreateDateDesc, int pageSize = 5)
         {
+            ViewData["CurrentSort"] = sortOrder;
             ViewData["NameSort"] = sortOrder == SortState.NameAsc ? SortState.NameDesc : SortState.NameAsc;
             ViewData["CreateDataSort"] = sortOrder == SortState.CreateDateAsc ? SortState.CreateDateDesc : SortState.CreateDateAsc;
             ViewData["EndDateSort"] = sortOrder == SortState.EndDateAsc ? SortState.EndDateDesc : SortState.EndDateAsc;

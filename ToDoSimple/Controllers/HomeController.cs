@@ -85,6 +85,16 @@ namespace ToDoSimple.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+        public async Task<IActionResult> CheckDelete(int id)  
+        {
+            var note = await _context.Notes.FirstOrDefaultAsync(n => n.Id == id);
+            if (note != null)
+            {
+                return View(note);
+            }
+            return RedirectToAction("Index");
+        }
+
         public async Task<IActionResult> Delete(int id)
         {
             var note = await _context.Notes.FirstOrDefaultAsync(n => n.Id == id);

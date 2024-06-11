@@ -1,0 +1,32 @@
+﻿@using ToDoSimple.Models.Home;
+@using ToDoSimple.Models;
+
+@model Note
+@{
+    ViewBag.Title = "Confirm...";
+}
+<head>
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+</head>
+<body>
+    <div class="shadow-sm p-3 mt-4 rounded bg-white">
+        <h>
+            are you shure? Note "@Model.Name" will be deleted
+        </h>
+    </div>
+    <div>
+        <ul>
+
+            <li>
+                <a href="/home/delete/@Model.Id">Yes, delete</a>
+            </li>
+            <li>
+                <a href="/home/index">No, back to list</a>
+            </li>
+        </ul>
+    </div>
+</body>

@@ -13,20 +13,26 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
 </head>
 <body>
-    <div class="shadow-sm p-3 mt-4 rounded bg-white">
+    <div class="row shadow-sm p-3 mt-4 rounded bg-white">
         <h>
             are you shure? Note "@Model.Name" will be deleted
         </h>
     </div>
-    <div>
-        <ul>
+    <div class="row ">
+        <div class="col-2">
+            <a href="/home/delete/@Model.Id">
+                <button class="btn btn-outline-danger">
+                    Yes, delete
+                </button>
+            </a>
+        </div>
+        <div class="col-2">
 
-            <li>
-                <a href="/home/delete/@Model.Id">Yes, delete</a>
-            </li>
-            <li>
-                <a href="/home/index">No, back to list</a>
-            </li>
-        </ul>
+            <a href="/home/index">
+                <button class="btn btn-outline-success">
+                    No, back to list
+                </button>
+            </a>
+        </div>
     </div>
 </body>

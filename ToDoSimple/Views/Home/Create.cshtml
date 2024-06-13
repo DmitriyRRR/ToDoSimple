@@ -20,23 +20,23 @@
                  <div class="col-4">
                      <span asp-validation-summary></span>
                 <div action="form-floating">
-                    <input asp-for="NoteName" type="text" value="Note" minlength="3" maxlength="20" class="form-control shadow-sm rounded" required />
                     <label asp-for="NoteName">Note Name</label>
+                    <input asp-for="NoteName" type="text" value="Note" minlength="3" maxlength="20" class="form-control shadow-sm rounded" required />
                 </div>
                 <span asp-validation-for="NoteName" class="text-danger"></span>
             </div>
             <div class="col-4">
 
                 <div action="form-floating">
+                    <label asp-for="NoteDescription">Note Description</label>
                     <input asp-for="NoteDescription" type="text" class="form-control shadow-sm rounded"/>
-                    <label asp-for="NoteDescription">Note Name</label>
                 </div>
                 <span asp-validation-for="NoteDescription" class="text-danger"></span>
             </div>
             <div class="col-4">
                 <div action="form-floating">
-                    <input asp-for="ExpireDate" type="datetime-local" class="form-control shadow-sm rounded"/>
                     <label asp-for="ExpireDate">Expire Date</label>
+                    <input asp-for="ExpireDate" type="datetime-local" class="form-control shadow-sm rounded"/>
                 </div>
                 <span asp-validation-for="ExpireDate" class="text-danger"></span>
             </div>

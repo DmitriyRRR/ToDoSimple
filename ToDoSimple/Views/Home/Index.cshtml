@@ -5,7 +5,13 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-
+<head>
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+</head>
 <div class="text-center">
     <div class="col-8">
         <form asp-action="index" method="get">
@@ -19,43 +25,18 @@
         </form>
         <table class="table table-hover table-striped">
             <tbody>
-                <tr>
-                    <th><u></u></th>
-                    <th>
-                        <u>
-                            <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSort"]">Name</a>
-                        </u>
-                    </th>
-                    <th>
-                        <u>
-                            <a asp-action="Index" asp-route-sortOrder="@ViewData["EndDateSort"]">ExpireDate</a>
-                        </u>
-                    </th>
-                    <th><u>Is Completed</u></th>
-                    <th>
-                        <u>
-                            <a asp-action="Index" asp-route-sortOrder="@ViewData["CreateDataSort"]">Create Date</a>
-                        </u>
-                    </th>
-                    <th><u></u></th>
-                </tr>
+
                 <tr>
                     @foreach (var note in Model)
                     {
                     <tr>
                         <th>
-                            <a href="/home/CheckDelete/@note.Id"><button class="btn-close w-25"></button></a>
-                        </th>
-                        <th class="text-start"><a href="/home/details/@note.Id">@note.Name</a></th>
-                        <th>@note.ExpireDate</th>
-                        <th>@(note.IsCompleted ? "Done!" : "In process")</th>
-                        <th>@note.CreatedTimestamp</th>
-                        <th>
-                            <a href="/home/edit/@note.Id">Edit</a>
+                                @await Html.PartialAsync("_PartialNoteView.cshtml", note)
                         </th>
                     </tr>
                     <tr>
                     </tr>
+
                     }
             </tbody>
         </table>

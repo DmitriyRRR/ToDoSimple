@@ -28,7 +28,7 @@
                 </p>
             </div>
         </form>
-        <table class="table table-hover table-striped">
+        <table class="table font-monospace">
             <tbody>
                     @foreach (var note in Model)
                     {
@@ -117,25 +117,6 @@
     </button>
 </div>
 
-<div class="row">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>a</th>
-
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var note in Model)
-            {
-            <tr>
-                <th>@note.Id</th>
-               
-            </tr>    
-            }
-        </tbody>
-    </table>
-</div>
 @section Scripts
 {
     <script>

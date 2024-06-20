@@ -17,76 +17,73 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/Details.js"></script>
 </head>
-<div class="text-center">
-    <div class="col-8">
-        <form asp-action="index" method="get">
-            <div class="form-floating">
-                <p>
-                    Find by name: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
-                    <input class="btn btn-outline-info w -75" type="submit" value="Search" /> |
-                    <a asp-action="Index">Back to Full List</a>
-                </p>
+<div class="shadow-sm p-3 mt-4 rounded bg-white">
+
+    <div class="text-center">
+        <div class="col-8">
+            <form asp-action="index" method="get">
+                <div class="form-floating">
+                    <p>
+                        Find by name: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+                        <input class="btn btn-outline-info w -75" type="submit" value="Search" /> |
+                        <a asp-action="Index">Back to Full List</a>
+                    </p>
+                </div>
+            </form>
+            <div class=" font-monospace">
+                <tbody>
+                    @foreach (var note in Model)
+                    {
+                        @await Html.PartialAsync("_PartialNoteView.cshtml", note)
+                    }
             </div>
-        </form>
-        <div class=" font-monospace">
-            <tbody>
-                @foreach (var note in Model)
-                {
-                    @await Html.PartialAsync("_PartialNoteView.cshtml", note)
-                }
+            <nav aria-label="Pagiantion">
+                <ul class="pagination justify-content-center">
+
+                    <link class="page-item">
+                    <a asp-action="Index"
+                       asp-route-sortOrder="@ViewData["CurrentSort"]"
+                       asp-route-pageNumber="@(Model.PageIndex - 1)"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                       class="btn btn-default @prevDisabled" data-bs-toggle="tooltip" data-bs-placement="left" title="prev page">
+                        &laquo
+                    </a>
+                    </li>
+                    <link class="page-item">
+                    <form asp-action="Index"
+                          asp-route-sortOrder="@ViewData["CurrentSort"]"
+                          asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                        <input type="number" min="1" max="@Model.TotalPages" name="pageNumber" value="@Model.PageIndex" placeholder="@Model.PageIndex" />
+                        <input class="btn btn-outline-info w -50" type="submit" value="Go" />
+                    </form>
+                    </li>
+                    <link class="page-item">
+                    <a asp-action="Index"
+                       asp-route-sortOrder="@ViewData["CurrentSort"]"
+                       asp-route-pageNumber="@(Model.PageIndex + 1)"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                       class="btn btn-default @nextDisabled" data-bs-toggle="tooltip" data-bs-placement="right" title="next page">
+                        &raquo
+                    </a>
+                    </li>
+                </ul>
+            </nav>
         </div>
-        <nav aria-label="Pagiantion">
-            <ul class="pagination justify-content-center">
-
-                <link class="page-item">
-                <a asp-action="Index"
-                   asp-route-sortOrder="@ViewData["CurrentSort"]"
-                   asp-route-pageNumber="@(Model.PageIndex - 1)"
-                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
-                   class="btn btn-default @prevDisabled" data-bs-toggle="tooltip" data-bs-placement="left" title="prev page">
-                    &laquo
-                </a>
-                </li>
-                <link class="page-item">
-                <form asp-action="Index"
-                      asp-route-sortOrder="@ViewData["CurrentSort"]"
-                      asp-route-currentFilter="@ViewData["CurrentFilter"]">
-                    <input type="number" min="1" max="@Model.TotalPages" name="pageNumber" value="@Model.PageIndex" placeholder="@Model.PageIndex" />
-                    <input class="btn btn-outline-info w -50" type="submit" value="Go" />
-                </form>
-                </li>
-                <link class="page-item">
-                <a asp-action="Index"
-                   asp-route-sortOrder="@ViewData["CurrentSort"]"
-                   asp-route-pageNumber="@(Model.PageIndex + 1)"
-                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
-                   class="btn btn-default @nextDisabled" data-bs-toggle="tooltip" data-bs-placement="right" title="next page">
-                    &raquo
-                </a>
-                </li>
-            </ul>
-        </nav>
     </div>
-</div>
-<form asp-controller="Home" asp-action="Create" method="get">
-    <button class="btn btn-outline-success w -100">Create new note</button>
-</form>
+    <form asp-controller="Home" asp-action="Create" method="get">
+        <button class="btn btn-outline-success w -100">Create new note</button>
+    </form>
 
-<form class="mt-3" asp-controller="Account" asp-action="logout">
-    <button class="btn btn-outline-danger btn-sm">Logout</button>
-</form>
+    <form class="mt-3" asp-controller="Account" asp-action="logout">
+        <button class="btn btn-outline-danger btn-sm">Logout</button>
+    </form>
 
-<div class="mt-3">
-    <button type="button" class="btn btn-outline-danger btn-sm" id="some">SOME</button>
-</div>
+    <div class="col-1 mt-3">
+        <a href="#" id="some">
+            <i class="fa-solid fa-bug"></i>
+        </a>
+    </div>
 
-<div class="col-1 mt-3">
-    <!-- Button trigger modal -->
-    <button type="button"
-            class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top"
-            title="TEST BTN" id="details" data-bs-toggle="modal" 2data-bs-target="1#exampleModal">
-        Details(modal+fetch)
-    </button>
 </div>
 
 @section Scripts

@@ -85,7 +85,7 @@ namespace ToDoSimple.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public async Task<IActionResult> CheckDelete(int id)  
+        public async Task<IActionResult> CheckDelete(int id)
         {
             var note = await _context.Notes.FirstOrDefaultAsync(n => n.Id == id);
             if (note != null)
@@ -94,14 +94,19 @@ namespace ToDoSimple.Controllers
             }
             return RedirectToAction("Index");
         }
-
-        public async Task<IActionResult> Delete(int id)
+        [HttpDelete("/api/delete")]
+        public async Task<IActionResult> Delete([FromBody] string id)
         {
-            var note = await _context.Notes.FirstOrDefaultAsync(n => n.Id == id);
+            int idStr = Int32.Parse(id);
+            var note = await _context.Notes.FirstOrDefaultAsync(n => n.Id == idStr);
             if (note != null)
             {
                 _context.Notes.Remove(note);
                 _context.SaveChanges();
+            }
+            else
+            {
+                return Error();
             }
             return RedirectToAction("Index");
         }
@@ -129,19 +134,6 @@ namespace ToDoSimple.Controllers
             note.Description = description;
             note.IsCompleted = isCompleted;
             note.ExpireDate = DateTime.Parse(expireDate);
-            _context.Entry(note).State = EntityState.Modified;
-            _context.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditA(HomeViewModel model)
-        {
-            Note note = new Note();
-            note.Name = model.NoteName;
-            note.Description = model.NoteDescription;
-            note.ExpireDate = model.ExpireDate;
             _context.Entry(note).State = EntityState.Modified;
             _context.SaveChanges();
             return RedirectToAction("Index");

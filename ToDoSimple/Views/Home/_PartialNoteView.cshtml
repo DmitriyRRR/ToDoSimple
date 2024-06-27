@@ -1,16 +1,17 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @model ToDoSimple.Models.Note
 
-
-
-<div class="shadow-sm p-3 mb-5 bg-body-tertiary rounded d-flex justify-content-between align-items-center">
+<div class="note shadow-sm p-3 mb-5 bg-body-tertiary rounded d-flex justify-content-between align-items-center">
+    <div class="deleteId d-none" id="delete-Id">@Model.Id</div>
     <div class="col-2">
         <span>
             @(Model.IsCompleted ? "Done" : "In process");
         </span>
     </div>
-    <div class="col-2">
-       <a href="~/home/edite/"></a> <span>@Model.Name</span>
+    <div class="col-2 name">
+        <a href="~/home/details/@Model.Id">
+            <span>@Model.Name</span>
+        </a>
     </div>
     <div class="col-2">
         <span class="fs-0">@Model.Description</span>
@@ -21,10 +22,22 @@
     <div class="col-2">
         <span>@Model.CreatedTimestamp</span>
     </div>
-    <div class="col-1">
-        <a href="/home/CheckDelete/@Model.Id">
-            <i class="fa-solid fa-trash-can"></i>
+    <div class="edit col-1">
+        <a href="#">
+            @*         <a href="/home/edit/@Model.Id">
+            <i class="fa-solid fa-pencil" style="color:cadetblue"></i>
+            *@
+            <button class="btn text-secondary edit" data-bs-title="Редактировать" data-bs-toggle="tooltip">
+                <i class="fa-solid fa-pencil"></i>
+            </button>
         </a>
     </div>
-
+    <div class="col-1">
+        <a href="#">
+            <i class="fa-solid fa-trash-can delete" id="delete"></i>
+        </a>
+    </div>
+    <div class="editable-group d-flex align-items-center d-none">
+        <span id="deleteAlert">Are you shure?!</span>
+    </div>
 </div>

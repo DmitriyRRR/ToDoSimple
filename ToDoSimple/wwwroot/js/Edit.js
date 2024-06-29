@@ -8,7 +8,7 @@ notes.forEach(note => {
 
     editBtn.addEventListener('click', () => {
         editBtn.classList.add('disabled');
-        note.querySelector('.editable-group').classList.remove('d-none');
+      //  note.querySelector('.editable-group').classList.remove('d-none');
     });
 
     dltBtn.addEventListener('click', async () => {

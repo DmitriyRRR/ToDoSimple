@@ -8,28 +8,39 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ToDoSimple.styles.css" asp-append-version="true" />
 </head>
+<style>
+    body {
+        background-color: #eceff4;
+    }
+</style>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ToDoSimple</a>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+    <div class="container-fluid " style="min-height: 100vh;">
+        <div class="row w-100 align-items-center flex-column pt-lg-5" style="min-height: 100vh;">
+            <div class="col-8">
+                <main role="main" class="w-100">
+                    <header class="d-flex align-items-center justify-content-between">
+                        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                            <div class="container-fluid">
+                                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ToDoSimple</a>
+                            </div>
+                        </nav>
+                    </header>
+                    <div class="container">
+                            @RenderBody()
+                        </main>
+                    </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - ToDoSimple
+                    <footer class="border-top footer text-muted">
+                        <div class="container">
+                            &copy; 2024 - ToDoSimple
+                        </div>
+                    </footer>
+            </div>
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+    </div>
+                    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+                    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+                    <script src="~/js/site.js" asp-append-version="true"></script>
+                    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

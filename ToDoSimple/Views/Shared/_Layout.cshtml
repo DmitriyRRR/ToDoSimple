@@ -14,33 +14,38 @@
     }
 </style>
 <body>
-    <div class="container-fluid " style="min-height: 100vh;">
+    <div class="container-fluid" style="min-height: 100vh;">
         <div class="row w-100 align-items-center flex-column pt-lg-5" style="min-height: 100vh;">
             <div class="col-8">
                 <main role="main" class="w-100">
                     <header class="d-flex align-items-center justify-content-between">
                         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-                            <div class="container-fluid">
-                                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ToDoSimple</a>
+                            <div class="row-flex align-content-between">
+                                <div class="col-2">
+                                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ToDoSimple</a>
+                                <div class="col-2">
+                                        <a class="btn" href="home/Create" style="color:cadetblue">New Note</a>
+                                </div>
+                                </div>
+                                <div class="col-2">
+                                <a class="btn" href="home/logout" style="color:darkred">Logout</a>
+                                </div>
                             </div>
                         </nav>
                     </header>
-                    <div class="container">
-                            @RenderBody()
-                        </main>
-                    </div>
-
-                    <footer class="border-top footer text-muted">
-                        <div class="container">
-                            &copy; 2024 - ToDoSimple
-                        </div>
-                    </footer>
+                    @RenderBody()
+                </main>
             </div>
+
+            <footer class="footer text-end mt-3 w-100">
+                &copy; 2024 - ToDoSimple
+            </footer>
         </div>
     </div>
-                    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-                    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-                    <script src="~/js/site.js" asp-append-version="true"></script>
-                    @await RenderSectionAsync("Scripts", required: false)
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

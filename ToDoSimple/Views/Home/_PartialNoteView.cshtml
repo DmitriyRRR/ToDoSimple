@@ -13,14 +13,14 @@
             <span>@Model.Name</span>
         </a>
     </div>
-    <div class="col-2 overflow-auto">
-        <span class="fs-0">@Model.Description</span>
-    </div>
     <div class="col-2">
         <span>@Model.ExpireDate</span>
     </div>
     <div class="col-2">
         <span>@Model.CreatedTimestamp</span>
+    </div>
+    <div class="col-3 overflow-auto">
+        <span class="fs-0">@Model.Description</span>
     </div>
     <div class="edit col-1">
         <a href="/home/edit/@Model.Id">

@@ -172,5 +172,9 @@ namespace ToDoSimple.Controllers
             }
             return View("Create");//??????
         }
+        public async Task<IActionResult> Index2()
+        {
+            return View();
+        }
     }
 }

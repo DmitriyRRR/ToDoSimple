@@ -1,15 +1,9 @@
 const notes = document.querySelectorAll('.note');
 
 notes.forEach(note => {
-    let editBtn = note.querySelector('.edit');
-    let classes = editBtn.classList;
     let dltBtn = note.querySelector('.delete');
+    let editBtn = note.querySelector('.edit');
     let url = '/api/delete';
-
-    editBtn.addEventListener('click', () => {
-        editBtn.classList.add('disabled');
-      //  note.querySelector('.editable-group').classList.remove('d-none');
-    });
 
     dltBtn.addEventListener('click', async () => {
         const dataId = note.querySelector('.deleteId').textContent;

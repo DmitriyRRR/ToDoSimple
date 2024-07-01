@@ -19,19 +19,19 @@
 </head>
 
 <div class="shadow-sm p-3 mt-4 rounded bg-white">
-    @*
+    <span>TEST BUTTONS</span>
     <div class="row">
-    <div class="col-1  p-3">
-    <a href="#" id="some">
-    <i class="fa-solid fa-bug"></i>
-    </a>
+        <div class="col-1  p-3">
+            <a href="#" id="some">
+                <i class="fa-solid fa-bug"></i>
+            </a>
+        </div>
+        <div class="col-1  p-3">
+            <a href="/Home/Index2" id="gr">
+                <i class="fa-solid fa-bug" style="color:forestgreen"></i>
+            </a>
+        </div>
     </div>
-    <div class="col-1  p-3">
-    <a href="/home/index2" id="gr">
-    <i class="fa-solid fa-bug" style="color:forestgreen"></i>
-    </a>
-    </div>
-    </div> *@
 
     <div class="row">
         <div class="col-8">
@@ -68,9 +68,7 @@
                             <i class="fa-solid fa-pencil" style="color:lightgray"></i>
                         </div>
                         <div class="col-1">
-                            <a href="#">
                                 <i class="fa-solid fa-trash-can" style="color:lightgrey"></i>
-                            </a>
                         </div>
                     </div>
                     @foreach (var note in Model)

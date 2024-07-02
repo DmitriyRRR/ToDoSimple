@@ -10,7 +10,7 @@
     var nextDisabled = !Model.HasNextPage ? "disabled" : "";
 }
 <head>
-    <script src="~/js/Details.js"></script>
+    <script src="~/js/TestJS.js"></script>
 </head>
 
 <div class="shadow-sm p-3 mt-4 rounded bg-white">
@@ -32,13 +32,13 @@
         <div class="col-12">
             <div class=" font-monospace">
                 <tbody>
-                    <div class="shadow-sm p-3 mb-5 bg-body-tertiary rounded d-flex justify-content-between align-items-center text-center">
+                    <div class="shadow-sm p-3 mb-5 bg-body-tertiary rounded d-flex justify-content-between align-items-center text-center" style="background-color:#eceff4">
                         <div class="col-1">
                             <span>
                                 State
                             </span>
                         </div>
-                        <div class="col-2 name">
+                        <div class="col-2 name">    
                             <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSort"]">Name</a>
                         </div>
                         <div class="col-2">
@@ -113,5 +113,5 @@
             return new bootstrap.Tooltip(tooltipTriggerEl)
         })
     </script>
-    <script src="~/js/Edit.js"></script>
+    <script src="~/js/DeleteNote.js"></script>
 }

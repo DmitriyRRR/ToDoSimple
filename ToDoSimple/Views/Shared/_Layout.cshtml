@@ -28,29 +28,30 @@
         <div class="row w-100 align-items-center flex-column pt-lg-5" style="min-height: 100vh;">
             <div class="col-8">
                 <main role="main" class="w-100">
-                    <header class="d-flex align-items-center justify-content-between bg-white  shadow-sm rounded">
-                        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
+                    <header class="align-items-center justify-content-between bg-white  shadow-sm rounded">
+                        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow  position-relative">
                             <div class="container-fluid">
                                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ToDoSimple</a>
+                                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><u>ToDoSimple</u></a>
                                         <li class="nav-item">
                                             <a class="btn" href="home/Create" style="color:cadetblue">Create new  note</a>
                                         </li>
                                         @if (User.Identity.IsAuthenticated)
                                         {
                                             <form asp-action="index" method="get">
-                                                <div class="form-floating">
-                                                        <input type="text" name="SearchString" id="searchString" placeholder="input name" value="@ViewData["CurrentFilter"]" />                 
-                                                        <input class="btn w -75" type="submit" value="Search" /> 
+                                                <div class="input-group flex-nowrap start-50 rounded">
+                                                    <button type="submit" value="search" class="fa-solid fa-play rounded-start opacity-50"></button>
+                                                    <input type="text" class="form-control" name="SearchString" id="searchString"
+                                                    area-label="search" placeholder="search" value="@ViewData["CurrentFilter"]"/>
                                                 </div>
                                             </form>
                                         }
                                         else
                                         {
-                                        <div></div>    
+                                            <div></div>
                                         }
-                                        <li class="nav-item">
+                                        <li class="nav-item position-absolute end-0">
                                             <a class="btn" href="account/logout" style="color:darkred">Logout</a>
                                         </li>
                                     </ul>

@@ -2,7 +2,6 @@ const notes = document.querySelectorAll('.note');
 
 notes.forEach(note => {
     let dltBtn = note.querySelector('.delete');
-    let editBtn = note.querySelector('.edit');
     let url = '/api/delete';
 
     dltBtn.addEventListener('click', async () => {
@@ -33,7 +32,6 @@ notes.forEach(note => {
         }
         else {
             location.reload();
-            alert("reload");
         }
     });
 });

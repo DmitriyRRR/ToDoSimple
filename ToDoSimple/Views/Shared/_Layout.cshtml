@@ -37,8 +37,21 @@
                                         <li class="nav-item">
                                             <a class="btn" href="home/Create" style="color:cadetblue">Create new  note</a>
                                         </li>
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            <form asp-action="index" method="get">
+                                                <div class="form-floating">
+                                                        <input type="text" name="SearchString" id="searchString" placeholder="input name" value="@ViewData["CurrentFilter"]" />                 
+                                                        <input class="btn w -75" type="submit" value="Search" /> 
+                                                </div>
+                                            </form>
+                                        }
+                                        else
+                                        {
+                                        <div></div>    
+                                        }
                                         <li class="nav-item">
-                                            <a class="btn" href="home/logout" style="color:darkred">Logout</a>
+                                            <a class="btn" href="account/logout" style="color:darkred">Logout</a>
                                         </li>
                                     </ul>
                                 </div>

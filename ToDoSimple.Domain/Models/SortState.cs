@@ -8,5 +8,7 @@
         CreateDateDesc,
         EndDateAsc,
         EndDateDesc,
+        StateAsc,
+        StateDesc
     }
 }

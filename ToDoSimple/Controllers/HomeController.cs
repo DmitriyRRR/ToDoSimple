@@ -29,6 +29,7 @@ namespace ToDoSimple.Controllers
             ViewData["NameSort"] = sortOrder == SortState.NameAsc ? SortState.NameDesc : SortState.NameAsc;
             ViewData["CreateDataSort"] = sortOrder == SortState.CreateDateAsc ? SortState.CreateDateDesc : SortState.CreateDateAsc;
             ViewData["EndDateSort"] = sortOrder == SortState.EndDateAsc ? SortState.EndDateDesc : SortState.EndDateAsc;
+            ViewData["StateSort"] = sortOrder == SortState.StateAsc ? SortState.StateDesc : SortState.StateAsc;
             ViewData["CurrentFilter"] = searchString;
 
             if (searchString != null)
@@ -56,6 +57,8 @@ namespace ToDoSimple.Controllers
                 SortState.EndDateAsc => notes.OrderBy(n => n.ExpireDate),
                 SortState.EndDateDesc => notes.OrderByDescending(n => n.ExpireDate),
                 SortState.CreateDateAsc => notes.OrderBy(n => n.CreatedTimestamp),
+                SortState.StateDesc => notes.OrderByDescending(n => n.IsCompleted),
+                SortState.StateAsc => notes.OrderBy(n => n.IsCompleted),
                 _ => notes.OrderByDescending(n => n.CreatedTimestamp),
             };
 

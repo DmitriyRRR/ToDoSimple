@@ -101,15 +101,25 @@
         </div>
     </div>
 </div>
-<div class="m-4">
-    <div class="dropdown">
-        <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">Dropdown</a>
-        <div class="dropdown-menu">
-            <a href="#" class="dropdown-item">Action</a>
-            <a href="#" class="dropdown-item">Another action</a>
-        </div>
+<p class="d-inline-flex gap-1">
+    <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+        Link with href
+    </a>
+</p>
+<div class="collapse" id="collapseExample">
+    <div class="card card-body">
+        Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
     </div>
 </div>
+    <button class="btn btn-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+        Test Me
+    </button>
+    </p>
+    <div class="collapse" id="collapseExample">
+        <div class="card card-body">
+            Testy test test text that was collapsed.
+        </div>
+    </div>
 @section Scripts
 {
     <script>

@@ -31,7 +31,7 @@
         <div class="col-12">
             <div class=" font-monospace">
                 <tbody>
-                    <div class="shadow-sm p-3 mb-3 bg-body-tertiary rounded d-flex justify-content-between align-items-center text-center" style="background-color:#eceff4">
+                    <div class="shadow-sm p-3 mb-3 bg-body-tertiary rounded d-flex justify-content-between align-items-center text-center" style="background-color:#62  819c">
                         <div class="col-1">
                             <span>
                                 State
@@ -67,31 +67,26 @@
             <nav aria-label="Pagiantion">
                 <ul class="pagination justify-content-center m-4">
 
-                    <link class="page-item">
-                    <a asp-action="Index"
-                       asp-route-sortOrder="@ViewData["CurrentSort"]"
-                       asp-route-pageNumber="@(Model.PageIndex - 1)"
-                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
-                       class="btn btn-default @prevDisabled" data-bs-toggle="tooltip" data-bs-placement="left" title="prev page">
-                        &laquo
-                    </a>
+                    <li class="page-item">
+                        <a asp-action="Index"
+                           asp-route-sortOrder="@ViewData["CurrentSort"]"
+                           asp-route-pageNumber="@(Model.PageIndex - 1)"
+                           asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                           class="btn btn-default @prevDisabled" data-bs-toggle="tooltip" data-bs-placement="left" title="prev page">
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </a>
                     </li>
-                    <link class="page-item">
-                    <form asp-action="Index"
-                          asp-route-sortOrder="@ViewData["CurrentSort"]"
-                          asp-route-currentFilter="@ViewData["CurrentFilter"]">
-                        <input type="number" min="1" max="@Model.TotalPages" name="pageNumber" value="@Model.PageIndex" placeholder="@Model.PageIndex" />
-                        <input class="fa-solid w -50" type="submit" value="go" />
-                    </form>
+                    <li class="page-item">
+                        <span>@Model.PageIndex</span>
                     </li>
-                    <link class="page-item">
-                    <a asp-action="Index"
-                       asp-route-sortOrder="@ViewData["CurrentSort"]"
-                       asp-route-pageNumber="@(Model.PageIndex + 1)"
-                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
-                       class="btn btn-default @nextDisabled" data-bs-toggle="tooltip" data-bs-placement="right" title="next page">
-                        &raquo
-                    </a>
+                    <li class="page-item">
+                        <a asp-action="Index"
+                           asp-route-sortOrder="@ViewData["CurrentSort"]"
+                           asp-route-pageNumber="@(Model.PageIndex + 1)"
+                           asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                           class="btn btn-default @nextDisabled" data-bs-toggle="tooltip" data-bs-placement="right" title="next page">
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
                     </li>
                 </ul>
             </nav>

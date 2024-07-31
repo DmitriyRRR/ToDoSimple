@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Edit note";
 }
-<div class="container-fluid d-flex align-items-center justify-content-center flex-column" style="min-height: 100vh;">
+<div class="shadow-sm p-3 mt-4 rounded bg-white">
     <div class="card-header d-flex justify-content-center">
         <span class="text-primary fw-bold" style="font-size: 20px">
             Current note
@@ -12,37 +12,46 @@
     <form asp-action="Edit">
         <input type="hidden" asp-for="Id" />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="form-group">
-            <label asp-for="Name" class="control-label"></label>
-            <input asp-for="Name" type="text" class="form-control shadow-sm rounded" />
+        <div class="col-4">
+            <span asp-validation-summary></span>
+            <div action="form-floating">
+                <label asp-for="Name">Note Name</label>
+                <input asp-for="Name" type="text" value="Note" minlength="3" maxlength="20" class="form-control shadow-sm rounded" required />
+            </div>
             <span asp-validation-for="Name" class="text-danger"></span>
         </div>
-        <div class="form-group">
-            <label asp-for="Description" class="control-label"></label>
-            <input asp-for="Description" type="text" class="form-control shadow-sm rounded" />
-            <span asp-validation-for="Description" class="text-danger"></span>
+        <div class="col-8">
+            <div class="row row-flex">
+                <div action="form-floating">
+                    <label asp-for="Description">Note Description</label>
+                    <textarea asp-for="Description" type="text" class="form-control shadow-sm rounded"></textarea>
+                </div>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
         </div>
-        <div class="form-check form-switch">
+        <div class="form-check form-switch mt-3">
             <label asp-for="IsCompleted" class="form-check-label" for="isCompleted">Is Completed</label>
             <input asp-for="IsCompleted" type="checkbox" role="switch" class="form-check-input shadow-sm rounded" id="isCompleted" />
             <span asp-validation-for="IsCompleted" class="text-danger"></span>
         </div>
-        <div action="form-group">
-            <label asp-for="ExpireDate" class="control-label">ExpireDate</label>
-            <input asp-for="ExpireDate" type="datetime-local" class="form-control shadow-sm rounded" />
-            <label asp-for="ExpireDate">Date and time</label>
+        <div class="col-4 mt-3">
+            <div action="form-floating">
+                <label asp-for="ExpireDate">Expire Date</label>
+                <input asp-for="ExpireDate" type="datetime-local" class="form-control shadow-sm rounded" />
+            </div>
+            <span asp-validation-for="ExpireDate" class="text-danger"></span>
         </div>
         <span asp-validation-for="ExpireDate"></span>
-        <button class="btn btn-primary d-flex align-items-center justify-content-center shadow mt-2 w-75" style="background-color:lightgreen; color:black" type="submit">
-            Save
-        </button>
+        <div class="col-1  d-flex">
+            <button class="btn btn-primary d-flex align-items-center justify-content-center shadow mt-2 w-75" style="background-color:lightgrey; color:black" type="submit">
+                Save
+            </button>
+        </div>
     </form>
-    <div>
+    <div class="col-1  d-flex">
         <form asp-action="Index">
-            <button class="btn btn-primary d-flex align-items-center justify-content-center shadow mt-2 w-75">Back to List</button>
+            <button class="btn btn-primary d-flex align-items-center justify-content-center shadow mt-2 w-75" style="background-color:lightblue; color:black">Cancel</button>
         </form>
-    </div>
-</div>
     </div>
 </div>
 

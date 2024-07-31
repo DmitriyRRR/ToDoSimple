@@ -27,9 +27,9 @@
                             <div class="container-fluid">
                                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><u>ToDoSimple</u></a>
+                                        <a class="navbar-brand" asp-controller="Home" asp-action="Index"><u>ToDoSimple</u></a>
                                         <li class="nav-item">
-                                            <a class="btn" href="home/Create" style="color:cadetblue">Create new  note</a>
+                                            <a class="btn" href="~/home/Create" style="color:cadetblue">Create new  note</a>
                                         </li>
                                         @if (User.Identity.IsAuthenticated)
                                         {
@@ -46,7 +46,7 @@
                                             <div></div>
                                         }
                                         <li class="nav-item position-absolute end-0">
-                                            <a class="btn" href="account/logout" style="color:darkred">Logout</a>
+                                            <a class="btn" href="~/account/logout" style="color:darkred">Logout</a>
                                         </li>
                                     </ul>
                                 </div>

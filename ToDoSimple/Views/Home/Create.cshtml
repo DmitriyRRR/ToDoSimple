@@ -7,50 +7,44 @@
 @{
     ViewBag.Title = "Add new note";
 }
-<head>
-</head>
 <body>
     <div class="shadow-sm p-3 mt-4 rounded bg-white">
+        <span class="text-primary fw-bold" style="font-size: 20px">
+            New Note
+        </span>
         <form asp-action="Create">
-                 <div class="col-4">
-                     <span asp-validation-summary></span>
+            <div class="col-4">
+                <span asp-validation-summary></span>
                 <div action="form-floating">
                     <label asp-for="NoteName">Note Name</label>
-                    <input asp-for="NoteName" type="text" value="Note" minlength="3" maxlength="20" class="form-control shadow-sm rounded" required/>
+                    <input asp-for="NoteName" type="text" value="Note" minlength="3" maxlength="20" class="form-control shadow-sm rounded" required />
                 </div>
                 <span asp-validation-for="NoteName" class="text-danger"></span>
             </div>
             <div class="col-4">
-
                 <div action="form-floating">
                     <label asp-for="NoteDescription">Note Description</label>
-                    <input asp-for="NoteDescription" type="text" class="form-control shadow-sm rounded"/>
+                    <textarea asp-for="NoteDescription" type="text" class="form-control shadow-sm rounded"></textarea>
                 </div>
                 <span asp-validation-for="NoteDescription" class="text-danger"></span>
             </div>
             <div class="col-4">
                 <div action="form-floating">
                     <label asp-for="ExpireDate">Expire Date</label>
-                    <input asp-for="ExpireDate" type="datetime-local" class="form-control shadow-sm rounded"/>
+                    <input asp-for="ExpireDate" type="datetime-local" class="form-control shadow-sm rounded" />
                 </div>
                 <span asp-validation-for="ExpireDate" class="text-danger"></span>
             </div>
-            <div class="col-1 aslign-items-center d-flex">
-                <button class="btn btn-primary d-flex align-items-center justify-content-center shadow" type="submit">
+            <div class="col-1  d-flex">
+                <button class="btn btn-primary d-flex align-items-center justify-content-center shadow mt-3" type="submit">
                     Add
                 </button>
-
             </div>
-
         </form>
-    </div>
-    <div class="m-4">
-    <div class="dropdown">
-        <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">Dropdown</a>
-        <div class="dropdown-menu">
-            <a href="#" class="dropdown-item">Action</a>
-            <a href="#" class="dropdown-item">Another action</a>
+        <div class="col-1  d-flex">
+            <form asp-action="Index">
+                <button class="btn btn-primary d-flex align-items-center justify-content-center shadow mt-2 w-75" style="background-color:lightblue; color:black">Cancel</button>
+            </form>
         </div>
     </div>
-</div>
 </body>

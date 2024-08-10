@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoSimple", "ToDoSimple\To
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoSimple.Domain", "ToDoSimple.Domain\ToDoSimple.Domain.csproj", "{C6C303C0-8232-4706-BC18-239974EE1A09}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoSimple.Tests", "ToDoSimple.Tests\ToDoSimple.Tests.csproj", "{3515B979-BE91-43EF-ACF1-BB6CBE32B7F3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{C6C303C0-8232-4706-BC18-239974EE1A09}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C6C303C0-8232-4706-BC18-239974EE1A09}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C6C303C0-8232-4706-BC18-239974EE1A09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3515B979-BE91-43EF-ACF1-BB6CBE32B7F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3515B979-BE91-43EF-ACF1-BB6CBE32B7F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3515B979-BE91-43EF-ACF1-BB6CBE32B7F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3515B979-BE91-43EF-ACF1-BB6CBE32B7F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

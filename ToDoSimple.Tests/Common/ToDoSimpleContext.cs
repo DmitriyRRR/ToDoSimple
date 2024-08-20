@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Net.WebSockets;
 using Microsoft.EntityFrameworkCore;
 using ToDoSimple.Models;
+using Microsoft.AspNetCore.CookiePolicy;
 
 namespace ToDoSimple.Tests.Common
 {
@@ -47,6 +48,12 @@ namespace ToDoSimple.Tests.Common
                 );
             context.SaveChanges();
             return context;
+        }
+
+        public static void Destroy(ToDoContext context)
+        {
+            context.Database.EnsureDeleted();
+            context.Dispose();
         }
     }
 }

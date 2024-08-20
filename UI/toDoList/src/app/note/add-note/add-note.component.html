@@ -1,0 +1,39 @@
+<div class="container">
+    <div class="shadow-sm p-3 mt-4 rounded bg-white">
+        <form #form="ngForm" (ngSubmit)="onFormSbmit()">
+                 <div class="col-4">
+                     <span asp-validation-summary></span>
+                <div action="form-floating">
+                    <label form="form-label">Note Name</label>
+                    <input name="NoteName" id="NoteName" type="text" value="Note" minlength="3" maxlength="20" class="form-control shadow-sm rounded" required
+                    [(ngModel)]="model.noteName"/>
+                </div>
+                <span asp-validation-for="NoteName" class="text-danger"></span>
+            </div>
+            <div class="col-4">
+
+                <div action="form-floating">
+                    <label class="form-label">Note Description</label>
+                    <input name="NoteDescription" id="NoteDescription" type="text" class="form-control shadow-sm rounded"
+                    [(ngModel)]="model.noteDescription"/>
+                </div>
+                <span asp-validation-for="NoteDescription" class="text-danger"></span>
+            </div>
+            <div class="col-4">
+                <div action="form-floating">
+                    <label asp-for="ExpireDate">Expire Date</label>
+                    <input name="ExpireDate"  id="ExpireDate" type="datetime-local" class="form-control shadow-sm rounded"
+                    [(ngModel)]="model.noteExpireDate"/>
+                </div>
+                <span asp-validation-for="ExpireDate" class="text-danger"></span>
+            </div>
+            <div class="col-1  d-flex">
+                <button class="btn btn-primary d-flex align-items-center justify-content-center shadow mt-3" type="submit">
+                    Add
+                </button>
+
+            </div>
+
+        </form>
+    </div>
+</div>

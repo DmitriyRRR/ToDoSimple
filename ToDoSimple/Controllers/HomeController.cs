@@ -17,9 +17,8 @@ namespace ToDoSimple.Controllers
         private readonly ToDoContext _context;
         protected int _userId => int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-        public HomeController(ILogger<HomeController> logger, ToDoContext context)
+        public HomeController(ToDoContext context)
         {
-            _logger = logger;
             _context = context;
         }
 
@@ -62,7 +61,7 @@ namespace ToDoSimple.Controllers
                 _ => notes.OrderByDescending(n => n.CreatedTimestamp),
             };
 
-            return View(await PaginatedList<Note>.CreateAsync(notes.AsNoTracking(), pageNumber ?? 1, pageSize));
+            return View(await PaginatedList<Note>.CreatePageAsync(notes.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         public async Task<PageViewModel> Page(PageViewModel page)

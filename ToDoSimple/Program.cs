@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using ToDoSimple;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Domain.Interfaces;
+using ToDoSimple.Domain.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +10,7 @@ builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
 string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ToDoContext>(options => options.UseSqlServer(connectionString));
-
+builder.Services.AddScoped<IToDoRepository, ToDoRepository>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(o=>o.LoginPath = "/account");
 builder.Services.AddAuthorization();

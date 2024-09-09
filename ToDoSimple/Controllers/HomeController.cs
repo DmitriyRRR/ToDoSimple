@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Domain.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Security.Claims;
+using ToDoSimple.Domain.Repositories;
 using ToDoSimple.Models;
 using ToDoSimple.Models.Home;
 using ToDoSimple.Models.Pagination;
@@ -13,14 +15,16 @@ namespace ToDoSimple.Controllers
     [Authorize]
     public class HomeController : Controller
     {
+        private readonly IToDoRepository _repository;
         private readonly ILogger<HomeController> _logger;
         private readonly ToDoContext _context;
         protected int _userId => int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-
-        public HomeController(ILogger<HomeController> logger, ToDoContext context)
+        
+        public HomeController(ILogger<HomeController> logger, ToDoContext context,IToDoRepository repository )
         {
             _logger = logger;
             _context = context;
+            _repository = repository;
         }
 
         public async Task<IActionResult> Index(int? pageNumber, string currentFilter, string searchString, SortState sortOrder = SortState.CreateDateDesc, int pageSize = 5)
@@ -142,11 +146,21 @@ namespace ToDoSimple.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> Details(int? id)
+        //public async Task<IActionResult> Details(int? id)
+        //{
+        //    if (id != null)
+        //    {
+        //        Note note = await _context.Notes.FirstOrDefaultAsync(n => n.Id == id);
+        //        return View(note);
+        //    }
+        //    return NotFound();
+        //}
+        public async Task<IActionResult> Details(int id)
         {
-            if (id != null)
+            int NoteId = id;
+            if(id !=null)
             {
-                Note note = await _context.Notes.FirstOrDefaultAsync(n => n.Id == id);
+                Note note = await _repository.GetItem(id);
                 return View(note);
             }
             return NotFound();

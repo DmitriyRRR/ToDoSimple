@@ -120,7 +120,7 @@ namespace ToDoSimple.Controllers
         {
             if (id != null)
             {
-                Note note = await _context.Notes.FirstOrDefaultAsync(n => n.Id == id);
+                Note note = await _repository.GetItem(id);
                 return View(note);
             }
             return NotFound();
@@ -185,7 +185,7 @@ namespace ToDoSimple.Controllers
                 //return RedirectToAction("Details", new { id = (_context.Notes.FirstOrDefault(n => n.Name == model.NoteName).Id) });//wtf?? 
                 return RedirectToAction("Index"); // previously variant
             }
-            return View("Create");//??????
+            return Error();//??????
         }
         public async Task<IActionResult> Index2()
         {

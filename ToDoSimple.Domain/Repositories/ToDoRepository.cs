@@ -25,7 +25,7 @@ namespace ToDoSimple.Domain.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<Note> GetItem(int id)
+        public async Task<Note> GetItem(int? id)
         {
             var note = await _context.Notes.FirstOrDefaultAsync(n => n.Id == id);
             return note;

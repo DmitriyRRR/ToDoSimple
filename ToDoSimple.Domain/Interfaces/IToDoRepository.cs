@@ -11,7 +11,7 @@ namespace Domain.Interfaces
     {
         public Task<IEnumerable<Note>> GetItems();
         public Task CreateItem(Note note);
-        public Task RemoveItem(int id);
+        public Task DeleteItem(int id);
         public Task<Note> GetItem(int id);
         public Task Update(Note note);
     }

@@ -36,9 +36,21 @@ namespace ToDoSimple.Domain.Repositories
             throw new NotImplementedException();
         }
 
-        public Task RemoveItem(int id)
+        public Task DeleteItem(int id)
         {
-            throw new NotImplementedException();
+            if (id != null)
+            {
+                var note = _context.Notes.FirstOrDefault(n => n.Id == id);
+                _context.Notes.Remove(note);
+                _context.SaveChanges();
+            }
+            else
+            {
+                throw new NullReferenceException(nameof(id));
+            }
+
+            return Task.CompletedTask;
+
         }
 
         public Task Update(Note note)

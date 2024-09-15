@@ -19,8 +19,8 @@ namespace ToDoSimple.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly ToDoContext _context;
         protected int _userId => int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-        
-        public HomeController(ILogger<HomeController> logger, ToDoContext context,IToDoRepository repository )
+
+        public HomeController(ILogger<HomeController> logger, ToDoContext context, IToDoRepository repository)
         {
             _logger = logger;
             _context = context;
@@ -105,11 +105,9 @@ namespace ToDoSimple.Controllers
         public async Task<IActionResult> Delete([FromBody] string id)
         {
             int idStr = Int32.Parse(id);
-            var note = await _context.Notes.FirstOrDefaultAsync(n => n.Id == idStr);
-            if (note != null)
+            if (idStr != null)
             {
-                _context.Notes.Remove(note);
-                _context.SaveChanges();
+                _repository.DeleteItem(idStr);
             }
             else
             {
@@ -158,7 +156,7 @@ namespace ToDoSimple.Controllers
         public async Task<IActionResult> Details(int id)
         {
             int NoteId = id;
-            if(id !=null)
+            if (id != null)
             {
                 Note note = await _repository.GetItem(id);
                 return View(note);

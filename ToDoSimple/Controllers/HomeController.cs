@@ -173,14 +173,7 @@ namespace ToDoSimple.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _context.AddAsync(new Note
-                {
-                    Name = model.NoteName,
-                    Description = model.NoteDescription,
-                    ExpireDate = model.ExpireDate,
-                    UserId = _userId
-                });
-                await _context.SaveChangesAsync();
+                _repository.CreateItem(model, _userId);
                 //var note = await _context.Notes.FirstOrDefaultAsync(n => n.Name.ToLower() == model.NoteName.ToLower());
                 //return RedirectToAction("Details", new { id = (_context.Notes.FirstOrDefault(n => n.Name == model.NoteName).Id) });//wtf?? 
                 return RedirectToAction("Index"); // previously variant

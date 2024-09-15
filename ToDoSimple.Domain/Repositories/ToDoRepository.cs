@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ToDoSimple.Models;
+using ToDoSimple.Models.Home;
 
 namespace ToDoSimple.Domain.Repositories
 
@@ -20,9 +21,19 @@ namespace ToDoSimple.Domain.Repositories
             _context = context;
         }
 
-        public Task CreateItem(Note note)
+        public async Task<Task> CreateItem(HomeViewModel model, int userId)
         {
-            throw new NotImplementedException();
+
+
+                await _context.AddAsync(new Note
+                {
+                    Name = model.NoteName,
+                    Description = model.NoteDescription,
+                    ExpireDate = model.ExpireDate,
+                    UserId = userId
+                });
+                await _context.SaveChangesAsync();
+            return Task.CompletedTask;
         }
 
         public async Task<Note> GetItem(int? id)
@@ -86,5 +97,6 @@ namespace ToDoSimple.Domain.Repositories
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
+
     }
 }

@@ -16,6 +16,7 @@ namespace ToDoSimple.Models
         [Required]
         public DateTime ExpireDate { get; set; } = DateTime.Now;
         public DateTime CreatedTimestamp { get; set; } = DateTime.Now;
+        public string? AddedBy { get; set; } = "n.a.";
 
         [ForeignKey("UserId")]
         public User User { get; set; }

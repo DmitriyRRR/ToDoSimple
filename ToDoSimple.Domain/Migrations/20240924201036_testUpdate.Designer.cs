@@ -12,8 +12,8 @@ using ToDoSimple;
 namespace ToDoSimple.Domain.Migrations
 {
     [DbContext(typeof(ToDoContext))]
-    [Migration("20240612195009_a")]
-    partial class a
+    [Migration("20240924201036_testUpdate")]
+    partial class testUpdate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,6 +32,9 @@ namespace ToDoSimple.Domain.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AddedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedTimestamp")
                         .HasColumnType("datetime2");

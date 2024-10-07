@@ -144,15 +144,6 @@ namespace ToDoSimple.Controllers
             return RedirectToAction("Index");
         }
 
-        //public async Task<IActionResult> Details(int? id)
-        //{
-        //    if (id != null)
-        //    {
-        //        Note note = await _context.Notes.FirstOrDefaultAsync(n => n.Id == id);
-        //        return View(note);
-        //    }
-        //    return NotFound();
-        //}
         public async Task<IActionResult> Details(int id)
         {
             int NoteId = id;
@@ -180,6 +171,7 @@ namespace ToDoSimple.Controllers
             }
             return Error();//??????
         }
+
         public async Task<IActionResult> Index2()
         {
             return View();

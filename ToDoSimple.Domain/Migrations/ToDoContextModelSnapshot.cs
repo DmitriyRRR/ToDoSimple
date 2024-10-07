@@ -30,6 +30,9 @@ namespace ToDoSimple.Domain.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("AddedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedTimestamp")
                         .HasColumnType("datetime2");
 

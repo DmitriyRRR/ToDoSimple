@@ -97,6 +97,7 @@ namespace ToDoSimple.Controllers
             }
             return RedirectToAction("Index");
         }
+
         [HttpDelete("/api/delete")]
         public async Task<IActionResult> Delete([FromBody] string id)
         {
@@ -176,6 +177,11 @@ namespace ToDoSimple.Controllers
             return View("Create");//??????
         }
         public async Task<IActionResult> Index2()
+        {
+            return View();
+        }
+
+        public IActionResult FFF()
         {
             return View();
         }
